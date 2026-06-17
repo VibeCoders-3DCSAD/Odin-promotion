@@ -6,10 +6,10 @@ export const CompositionProps = z.object({
 });
 
 export const defaultMyCompProps: z.infer<typeof CompositionProps> = {
-  title: "Next.js and Remotion",
+  title: "Odin makes truly Filipino Budgets",
 };
 
-export const DURATION_IN_FRAMES = 200;
+export const DURATION_IN_FRAMES = 900;
 export const VIDEO_WIDTH = 1280;
 export const VIDEO_HEIGHT = 720;
 export const VIDEO_FPS = 30;
