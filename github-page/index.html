@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Odin — Take command of your finances with AI-powered budgeting, debt management, and intelligent financial insights.">
+  <meta property="og:title" content="Odin — Take Command of Your Finances">
+  <meta property="og:description" content="AI-powered personal finance management. Budget smarter, manage debt, and build wealth.">
+  <meta property="og:image" content="../public/dashboard.png">
+  <meta name="theme-color" content="#003527">
+  <title>Odin — Take Command of Your Finances</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">ODIN</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav__links" id="navLinks" role="menubar">
+        <button class="nav__link" role="menuitem" data-section="features">Features</button>
+        <button class="nav__link" role="menuitem" data-section="capabilities">Capabilities</button>
+        <button class="nav__link" role="menuitem" data-section="cta">Get Started</button>
+        <a href="#" class="nav__cta">Get Early Access</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="hero__inner">
+      <div class="hero__content">
+        <div class="hero__badge">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <circle cx="6" cy="6" r="3" fill="#064e3b"/>
+          </svg>
+          AI-Powered Finance
+        </div>
+        <h1 class="hero__title">
+          Take Command<br>
+          of <strong>Your Finances</strong>
+        </h1>
+        <p class="hero__subtitle text-lg">
+          Odin brings clarity to your financial life. AI-driven budgeting,
+          intelligent debt management, and a personal financial copilot — all
+          in one calm, powerful experience.
+        </p>
+        <div class="hero__actions">
+          <a href="#" class="btn btn--primary">Get Early Access</a>
+          <a href="#features" class="btn btn--secondary">See Features</a>
+        </div>
+      </div>
+      <div class="hero__media">
+        <div class="phone-frame">
+          <img
+            src="../public/dashboard.png"
+            alt="Odin financial dashboard overview"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--low" id="features">
+    <div class="container">
+      <div class="section__label animate">Features</div>
+      <h2 class="section__title animate animate--delay-1">
+        Everything you need to<br>
+        master your money
+      </h2>
+      <p class="section__desc text-lg animate animate--delay-2">
+        Odin combines powerful financial tools with AI assistance to give you
+        complete control over your financial life.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--low">
+    <div class="container">
+      <div class="features">
+
+        <div class="feature animate">
+          <div class="feature__content">
+            <div class="feature__number">01</div>
+            <h3 class="feature__title">Smart Budgeting</h3>
+            <p class="feature__desc">
+              Set budgets that actually work. Odin analyzes your spending
+              patterns and gives you personalized advice to optimize your
+              finances without the guilt trip.
+            </p>
+            <ul class="feature__list">
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                AI-powered budget recommendations
+              </li>
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Real-time spending insights
+              </li>
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Customizable budget categories
+              </li>
+            </ul>
+          </div>
+          <div class="feature__media">
+            <div class="phone-frame">
+              <img
+                src="../public/budget-advice.png"
+                alt="Odin budget advice screen"
+                class="feature__image"
+                loading="lazy"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="feature feature--reverse animate">
+          <div class="feature__content">
+            <div class="feature__number">02</div>
+            <h3 class="feature__title">Debt &amp; Savings Management</h3>
+            <p class="feature__desc">
+              Get a clear picture of your debt payoff journey and savings
+              progress. Odin helps you prioritize, track, and celebrate every
+              financial milestone.
+            </p>
+            <ul class="feature__list">
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Debt payoff tracking and strategy
+              </li>
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Savings goal monitoring
+              </li>
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Net worth visualization
+              </li>
+            </ul>
+          </div>
+          <div class="feature__media">
+            <div class="phone-frame">
+              <img
+                src="../public/debt-manager.png"
+                alt="Odin debt manager screen"
+                class="feature__image"
+                loading="lazy"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="feature animate">
+          <div class="feature__content">
+            <div class="feature__number">03</div>
+            <h3 class="feature__title">AI Financial Copilot</h3>
+            <p class="feature__desc">
+              Your personal financial assistant. Ask questions, get advice, and
+              make informed decisions with Odin's AI — like having a wealth
+              manager in your pocket.
+            </p>
+            <ul class="feature__list">
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Natural language financial queries
+              </li>
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                Personalized savings recommendations
+              </li>
+              <li class="feature__list-item">
+                <span class="feature__list-icon">
+                  <svg viewBox="0 0 10 10"><path d="M8.5 2L3.5 7 1.5 5"/></svg>
+                </span>
+                24/7 financial guidance
+              </li>
+            </ul>
+          </div>
+          <div class="feature__media">
+            <div class="phone-frame">
+              <img
+                src="../public/assistant.png"
+                alt="Odin AI assistant screen"
+                class="feature__image"
+                loading="lazy"
+              >
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="capabilities">
+    <div class="container">
+      <div class="section__label animate">Capabilities</div>
+      <h2 class="section__title animate animate--delay-1">
+        More tools, one place
+      </h2>
+      <p class="section__desc text-lg animate animate--delay-2" style="margin-bottom: 1rem;">
+        From tracking every transaction to visualizing your complete financial
+        picture — Odin has you covered.
+      </p>
+    </div>
+    <div class="container">
+      <div class="gallery-grid">
+        <div class="gallery-item animate">
+          <div class="phone-frame">
+            <img src="../public/savings-debt.png" alt="Odin savings and debt overview" loading="lazy">
+          </div>
+          <div class="gallery-item__label">Savings &amp; Debt Overview</div>
+        </div>
+        <div class="gallery-item animate animate--delay-1">
+          <div class="phone-frame">
+            <img src="../public/history.png" alt="Odin transaction history" loading="lazy">
+          </div>
+          <div class="gallery-item__label">Transaction History</div>
+        </div>
+        <div class="gallery-item animate animate--delay-2">
+          <div class="phone-frame">
+            <img src="../public/add-transaction.png" alt="Odin add transaction screen" loading="lazy">
+          </div>
+          <div class="gallery-item__label">Quick Transaction Entry</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="stats">
+        <div class="stat animate">
+          <div class="stat__number">10K+</div>
+          <div class="stat__label">Active Users</div>
+        </div>
+        <div class="stat animate animate--delay-1">
+          <div class="stat__number">99.9%</div>
+          <div class="stat__label">Uptime</div>
+        </div>
+        <div class="stat animate animate--delay-2">
+          <div class="stat__number">4.9★</div>
+          <div class="stat__label">User Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--low" id="cta">
+    <div class="container container--narrow">
+      <div class="cta-content">
+        <div class="section__label animate">Get Started</div>
+        <h2 class="section__title animate animate--delay-1">
+          Ready to take command<br>
+          of your financial future?
+        </h2>
+        <p class="text-lg animate animate--delay-2" style="margin-bottom: 2.5rem;">
+          Join thousands of users who have transformed their relationship with
+          money. Odin is free to start.
+        </p>
+        <a href="#" class="btn btn--primary animate animate--delay-3">Get Early Access</a>
+      </div>
+    </div>
+  </section>
+
+  <button class="audio-toggle" id="audioToggle" aria-label="Toggle background music">
+    <svg id="audioIconOff" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <line x1="23" y1="9" x2="17" y2="15"/>
+      <line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>
+    <svg id="audioIconOn" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    </svg>
+  </button>
+
+  <audio id="bgAudio" loop preload="none">
+    <source src="../public/Fun%20%26%20Upbeat%20Background%20Music%20For%20Advertising%20Videos%20%5BRoyalty%20Free%20-%20Commercial%20Use%5D%20%5BKhZLU-Hge-c%5D.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <div class="footer__logo">ODIN</div>
+        <p class="footer__desc">
+          Take command of your finances with AI-powered tools built for clarity,
+          control, and calm.
+        </p>
+      </div>
+      <div class="footer__links">
+        <div class="footer__col">
+          <h4>Product</h4>
+          <a href="#features">Features</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#">Pricing</a>
+        </div>
+        <div class="footer__col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>&copy; 2026 Odin. All rights reserved.</span>
+      <span>Built with purpose.</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
