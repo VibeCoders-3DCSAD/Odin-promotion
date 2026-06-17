@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "author": {
-    "name": "Mohit Yadav",
-    "email": "mohit@mohitya.dev",
-    "url": "https://mohitya.dev"
+    "name": "Odin Team",
+    "email": "",
+    "url": ""
   },
   "dependencies": {
     "@remotion/bundler": "4.0.479",
@@ -53,6 +53,7 @@
     "lint": "eslint .",
     "remotion": "remotion studio",
     "render": "remotion render",
+    "render:1080p": "remotion render --scale=1.5",
     "deploy": "node deploy.mjs"
   }
 }

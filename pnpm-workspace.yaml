@@ -1,0 +1,37 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+  unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@remotion/bundler@4.0.479'
+  - '@remotion/canvas-capture@4.0.479'
+  - '@remotion/cli@4.0.479'
+  - '@remotion/compositor-darwin-arm64@4.0.479'
+  - '@remotion/compositor-darwin-x64@4.0.479'
+  - '@remotion/compositor-linux-arm64-gnu@4.0.479'
+  - '@remotion/compositor-linux-arm64-musl@4.0.479'
+  - '@remotion/compositor-linux-x64-gnu@4.0.479'
+  - '@remotion/compositor-linux-x64-musl@4.0.479'
+  - '@remotion/compositor-win32-x64-msvc@4.0.479'
+  - '@remotion/eslint-plugin@4.0.479'
+  - '@remotion/google-fonts@4.0.479'
+  - '@remotion/lambda-client@4.0.479'
+  - '@remotion/lambda@4.0.479'
+  - '@remotion/licensing@4.0.479'
+  - '@remotion/media-parser@4.0.479'
+  - '@remotion/media-utils@4.0.479'
+  - '@remotion/paths@4.0.479'
+  - '@remotion/player@4.0.479'
+  - '@remotion/renderer@4.0.479'
+  - '@remotion/serverless-client@4.0.479'
+  - '@remotion/serverless@4.0.479'
+  - '@remotion/shapes@4.0.479'
+  - '@remotion/streaming@4.0.479'
+  - '@remotion/studio-server@4.0.479'
+  - '@remotion/studio-shared@4.0.479'
+  - '@remotion/studio@4.0.479'
+  - '@remotion/tailwind-v4@4.0.479'
+  - '@remotion/timeline-utils@4.0.479'
+  - '@remotion/web-renderer@4.0.479'
+  - '@remotion/zod-types@4.0.479'
+  - remotion@4.0.479
