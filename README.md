@@ -39,7 +39,13 @@ npx remotion studio
 Render a video locally:
 
 ```
-npx remotion render
+pnpm exec remotion render
+```
+
+Render a 1080p export from the current 1280x720 composition:
+
+```
+pnpm exec remotion render --scale=1.5
 ```
 
 Upgrade Remotion:
