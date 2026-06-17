@@ -25,6 +25,14 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# AI agent config
+.agents/
+.codex/
+.opencode/
+
+# rendered frames
+f*.png
+
 # local env files
 .env*.local
 
