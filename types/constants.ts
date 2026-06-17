@@ -6,10 +6,10 @@ export const CompositionProps = z.object({
 });
 
 export const defaultMyCompProps: z.infer<typeof CompositionProps> = {
-  title: "Odin makes truly Filipino Budgets",
+  title: "Truly Filipino Budgets",
 };
 
-export const DURATION_IN_FRAMES = 900;
+export const DURATION_IN_FRAMES = 1119;
 export const VIDEO_WIDTH = 1280;
 export const VIDEO_HEIGHT = 720;
 export const VIDEO_FPS = 30;
