@@ -66,32 +66,4 @@
       el.classList.add('animate--visible');
     });
   }
-
-  /* ── Audio toggle ── */
-  const audioToggle = document.getElementById('audioToggle');
-  const bgAudio = document.getElementById('bgAudio');
-  const iconOff = document.getElementById('audioIconOff');
-  const iconOn = document.getElementById('audioIconOn');
-
-  if (audioToggle && bgAudio) {
-    let isPlaying = false;
-
-    audioToggle.addEventListener('click', function () {
-      isPlaying = !isPlaying;
-
-      if (isPlaying) {
-        bgAudio.play().catch(function () {
-          isPlaying = false;
-        });
-        audioToggle.classList.add('audio-toggle--active');
-        iconOff.style.display = 'none';
-        iconOn.style.display = 'block';
-      } else {
-        bgAudio.pause();
-        audioToggle.classList.remove('audio-toggle--active');
-        iconOff.style.display = 'block';
-        iconOn.style.display = 'none';
-      }
-    });
-  }
 })();

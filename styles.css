@@ -613,39 +613,6 @@ p {
   opacity: 0.5;
 }
 
-/* Audio Toggle */
-.audio-toggle {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  z-index: 90;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(250, 249, 245, 0.6);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.125rem;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition);
-  color: var(--on-surface-muted);
-}
-
-.audio-toggle:hover {
-  background: var(--surface-white);
-  box-shadow: var(--shadow-md);
-  color: var(--primary);
-}
-
-.audio-toggle--active {
-  color: var(--primary);
-}
-
 /* Scroll Animations */
 .animate {
   opacity: 0;
