@@ -1090,7 +1090,7 @@ const SlideFinal: React.FC = () => {
             marginBottom: 18,
           }}
         >
-          Truly
+          Odin Makes Truly
         </div>
         <div
           style={{
