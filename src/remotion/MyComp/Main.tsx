@@ -2,1145 +2,1076 @@ import { fontFamily, loadFont } from "@remotion/google-fonts/Manrope";
 import {
   AbsoluteFill,
   Audio,
+  Easing,
   Img,
   interpolate,
   Sequence,
+  spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import {
-  entranceDir,
-  useCounter,
-  useSpringEntrance,
-} from "./animation";
+import { c, themeStyles, type Theme } from "./theme";
 
 loadFont("normal", {
   subsets: ["latin"],
-  weights: ["400", "500", "600", "700", "800"],
+  weights: ["300", "400", "500", "600", "700", "800"],
 });
 
-const c = {
-  pine: "#003527",
-  pineDeep: "#002118",
-  pineSoft: "#0d5b46",
-  sage: "#d8e5dc",
-  sand: "#efe6d8",
-  cream: "#f5f2eb",
-  paper: "#faf9f5",
-  ink: "#173128",
-  muted: "#61756a",
-  orange: "#ff8b52",
-  card: "#ffffff",
-};
+const ease = Easing.bezier(0.16, 1, 0.3, 1);
 
-const SLIDE_DURATION = 135;
-const OVERLAP = 12;
-
-const STARTS = [0, 1, 2, 3, 4, 5, 6, 7, 8].map(
-  (i) => i * (SLIDE_DURATION - OVERLAP),
+const SLIDE_DURATION = 180;
+const OVERLAP = 20;
+const STARTS = Array.from(
+  { length: 9 },
+  (_, i) => i * (SLIDE_DURATION - OVERLAP),
 );
+export const TOTAL_DURATION = STARTS[STARTS.length - 1] + SLIDE_DURATION;
 
-export const TOTAL_DURATION =
-  STARTS[STARTS.length - 1] + SLIDE_DURATION;
+const scenes = [
+  {
+    theme: "dark" as Theme,
+    eyebrow: "Personal finance management system",
+    title: "A serious budget system for real Filipino life.",
+    copy: "Odin turns daily money choices into forecasting, alerts, and calm guidance.",
+    image: "dashboard.png",
+    phone: "hero" as const,
+    layout: "center" as const,
+    icons: ["Forecast", "Detect", "Plan"],
+  },
+  {
+    theme: "pearl" as Theme,
+    eyebrow: "",
+    title: "Budget apps exist. Local guidance still does not fit.",
+    copy: "The issue is not only expense logging. It is advice that understands income timing, family duties, and shared obligations.",
+    image: "add-transaction.png",
+    phone: "right" as const,
+    layout: "split" as const,
+    icons: ["No context", "Generic rules", "Weak fit"],
+  },
+  {
+    theme: "light" as Theme,
+    eyebrow: "",
+    title: "Needs, obligations, and goals rarely arrive in neat columns.",
+    copy: "Odin treats family support, bills, savings, debt, insurance, and community spending as part of the same financial picture.",
+    image: "history.png",
+    phone: "large" as const,
+    layout: "portrait" as const,
+    icons: ["Variable pay", "Family support", "Community spend"],
+  },
+  {
+    theme: "pearl" as Theme,
+    eyebrow: "The evidence",
+    title: "People are not failing budgeting tools.",
+    copy: "Notebooks, spreadsheets, and no dedicated app are signals that current products are not becoming habits.",
+    image: "budget-recommendation.png",
+    phone: "none" as const,
+    layout: "stats" as const,
+    icons: ["22.2% manual", "57.8% no app"],
+  },
+  {
+    theme: "light" as Theme,
+    eyebrow: "",
+    title: "The model is shaped around local financial behavior.",
+    copy: "Filipino-grounded categories make the system more useful than a generic expense tracker with renamed labels.",
+    image: "assistant.png",
+    phone: "left" as const,
+    layout: "column" as const,
+    icons: ["Government", "Household", "Community"],
+  },
+  {
+    theme: "dark" as Theme,
+    eyebrow: "",
+    title: "Odin meets Filipinos where they are.",
+    copy: "A calm financial control room for every income level, obligation, and goal.",
+    image: "budget-advice.png",
+    phone: "small" as const,
+    layout: "statement" as const,
+    icons: ["Explain", "Adjust", "Protect"],
+  },
+  {
+    theme: "pearl" as Theme,
+    eyebrow: "The product loop",
+    title: "Input becomes pattern. Pattern becomes guidance.",
+    copy: "Logging is only the start. Repeated entries teach Odin how to forecast, detect anomalies, and suggest practical next moves.",
+    image: "budget-recommendation.png",
+    phone: "none" as const,
+    layout: "flow" as const,
+    icons: ["Capture", "Learn", "Guide"],
+  },
+  {
+    theme: "light" as Theme,
+    eyebrow: "",
+    title: "Visibility, prediction, protection, and planning in one loop.",
+    copy: "Dashboard, budget suggestions, spending forecasts, alerts, savings, debt, insurance, and behavioral profiling work together.",
+    image: "savings-debt.png",
+    phone: "small" as const,
+    layout: "grid" as const,
+    icons: [
+      "Dashboard",
+      "Forecast",
+      "Alerts",
+      "Savings",
+      "Debt",
+      "Insurance",
+      "Profile",
+      "Suggest",
+    ],
+  },
+  {
+    theme: "dark" as Theme,
+    eyebrow: "",
+    title: "Odin makes truly Filipino budgets.",
+    copy: "Built for variable income, family obligations, protected essentials, and forward-looking guidance.",
+    image: "logo1.png",
+    phone: "none" as const,
+    layout: "final" as const,
+    icons: ["Truly Filipino", "Practical intelligence"],
+  },
+];
 
-const BC = {
-  dark: `linear-gradient(135deg, ${c.pineDeep} 0%, ${c.pine} 100%)`,
-  warm: `linear-gradient(135deg, ${c.cream} 0%, ${c.sand} 100%)`,
-  light: `linear-gradient(135deg, ${c.paper} 0%, ${c.cream} 100%)`,
-};
-
-const MEDIA_STAGE_WIDTH = 360;
-const MEDIA_STAGE_HEIGHT = 560;
-
-const SlideWrap: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const useSlideFade = () => {
   const frame = useCurrentFrame();
-  const opacity = interpolate(
+  return interpolate(
     frame,
     [0, OVERLAP, SLIDE_DURATION - OVERLAP, SLIDE_DURATION],
     [0, 1, 1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: ease },
   );
-  return <AbsoluteFill style={{ opacity }}>{children}</AbsoluteFill>;
 };
 
-const SplitSlide: React.FC<{
-  background: string;
-  mediaSide?: "left" | "right";
-  textWidth?: number;
-  mediaWidth?: number;
-  gap?: number;
+const useSlideDrift = (amount = 24) => {
+  const frame = useCurrentFrame();
+  return interpolate(frame, [0, SLIDE_DURATION], [amount, -amount], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+};
+
+const useSpringReveal = (delay = 0) => {
+  const { fps } = useVideoConfig();
+  const frame = useCurrentFrame();
+  const p = spring({
+    fps,
+    frame: Math.max(0, frame - delay),
+    config: { damping: 14, mass: 0.8 },
+  });
+  return { opacity: p, transform: `translateY(${interpolate(p, [0, 1], [32, 0])}px)` };
+};
+
+const SceneWrap: React.FC<{
   children: React.ReactNode;
-  media?: React.ReactNode;
-}> = ({
-  background,
-  mediaSide = "right",
-  textWidth = 500,
-  mediaWidth = MEDIA_STAGE_WIDTH,
-  gap = 64,
-  children,
-  media,
-}) => {
+  theme: Theme;
+}> = ({ children, theme }) => {
+  const opacity = useSlideFade();
+  const drift = useSlideDrift(16);
+  const t = themeStyles[theme];
+
   return (
     <AbsoluteFill
       style={{
-        background,
-        padding: "56px 56px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+        backgroundColor: t.bg,
+        color: t.fg,
+        opacity,
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          width: "100%",
-          maxWidth: 1180,
-          display: "flex",
-          flexDirection: mediaSide === "left" ? "row" : "row-reverse",
-          alignItems: "center",
-          justifyContent: "center",
-          gap,
+          position: "absolute",
+          width: 600,
+          height: 600,
+          borderRadius: "50%",
+          background:
+            theme === "dark"
+              ? "radial-gradient(circle, rgba(26,138,116,0.08) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(26,138,116,0.05) 0%, transparent 70%)",
+          right: -200 + drift * 2,
+          top: 80,
         }}
-      >
-        <div
-          style={{
-            width: mediaWidth,
-            minWidth: mediaWidth,
-            display: "flex",
-            justifyContent: "center",
-            flexShrink: 0,
-          }}
-        >
-          {media}
-        </div>
-        <div
-          style={{
-            width: textWidth,
-            minWidth: textWidth,
-            position: "relative",
-            zIndex: 1,
-            flexShrink: 0,
-          }}
-        >
-          {children}
-        </div>
-      </div>
+      />
+      <div
+        style={{
+          position: "absolute",
+          width: 400,
+          height: 400,
+          borderRadius: "50%",
+          background:
+            theme === "dark"
+              ? "radial-gradient(circle, rgba(196,154,92,0.06) 0%, transparent 70%)"
+              : theme === "pearl"
+                ? "radial-gradient(circle, rgba(26,138,116,0.04) 0%, transparent 70%)"
+                : "radial-gradient(circle, rgba(26,138,116,0.04) 0%, transparent 70%)",
+          left: -160 - drift,
+          bottom: 100 - drift,
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 3,
+          background:
+            theme === "dark"
+              ? `linear-gradient(90deg, transparent, ${c.teal}, transparent)`
+              : `linear-gradient(90deg, transparent, ${c.gold}, transparent)`,
+        }}
+      />
+      {children}
     </AbsoluteFill>
   );
 };
 
-const MediaStage: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: MEDIA_STAGE_WIDTH,
-        height: MEDIA_STAGE_HEIGHT,
-      }}
-    >
-      {children}
-    </div>
-  );
-};
-
 const PhoneFrame: React.FC<{
-  src: string;
-  delay: number;
-  anchor?: "top" | "middle" | "bottom";
-  x?: number;
-  scale?: number;
-  rotate?: number;
-  entranceFrom?: "up" | "down";
-}> = ({
-  src,
-  delay,
-  anchor = "middle",
-  x = 0,
-  scale = 1,
-  rotate = 0,
-  entranceFrom = "up",
-}) => {
-  const e = useSpringEntrance(delay, { damping: 14, mass: 1.1 });
-  const top =
-    anchor === "top"
-      ? 0
-      : anchor === "bottom"
-        ? MEDIA_STAGE_HEIGHT - 506
-        : (MEDIA_STAGE_HEIGHT - 506) / 2;
-  const left = (MEDIA_STAGE_WIDTH - 260) / 2 + x;
-  const translateY = interpolate(
-    e,
-    [0, 1],
-    entranceFrom === "up" ? [80, 0] : [-80, 0],
-  );
+  image: string;
+  variant:
+    | "hero"
+    | "left"
+    | "right"
+    | "large"
+    | "small"
+    | "statement"
+    | "flow"
+    | "grid"
+    | "none";
+  delay?: number;
+}> = ({ image, variant, delay = 8 }) => {
+  const reveal = useSpringReveal(delay);
+  if (variant === "none") return null;
+
+  const widths: Record<string, number> = {
+    hero: 500,
+    large: 540,
+    left: 440,
+    right: 440,
+    small: 380,
+    statement: 520,
+    flow: 520,
+    grid: 420,
+  };
+  const w = widths[variant];
+  const h = w * 1.95;
+  const rotate = variant === "left" ? -3 : variant === "right" ? 3 : 0;
+
+  const positions: Record<string, { left: number; top: number }> = {
+    hero: { left: 290, top: 630 },
+    large: { left: 270, top: 680 },
+    left: { left: 60, top: 720 },
+    right: { left: 580, top: 720 },
+    small: { left: 350, top: 680 },
+    statement: { left: 280, top: 540 },
+    flow: { left: 280, top: 780 },
+    grid: { left: 330, top: 430 },
+  };
+  const pos = positions[variant];
 
   return (
     <div
       style={{
+        ...reveal,
         position: "absolute",
-        left,
-        top,
-        width: 260,
-        height: 506,
-        opacity: e,
-        transform: `translateY(${translateY}px) rotate(${rotate}deg) scale(${interpolate(e, [0, 1], [scale * 0.9, scale])})`,
+        left: pos.left,
+        top: pos.top,
+        width: w,
+        height: h,
+        transform: `${reveal.transform} rotate(${rotate}deg)`,
+        zIndex: 3,
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          inset: -18,
-          borderRadius: 42,
-          background:
-            "radial-gradient(circle at 50% 45%, rgba(255,139,82,0.18) 0%, rgba(255,139,82,0.08) 35%, rgba(255,255,255,0) 72%)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: -6,
-          borderRadius: 38,
-          border: "1px solid rgba(255,255,255,0.1)",
-          background: "rgba(255,255,255,0.03)",
-        }}
-      />
       <div
         style={{
           position: "relative",
           width: "100%",
           height: "100%",
-          borderRadius: 32,
-          padding: 9,
-          background: "linear-gradient(180deg, #173128 0%, #021b14 100%)",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.28)",
+          borderRadius: 64,
+          padding: 10,
+          background: `linear-gradient(145deg, ${c.ink}, #1a2d26)`,
+          boxShadow:
+            variant === "left" || variant === "right"
+              ? `0 30px 60px rgba(11,25,20,0.25)`
+              : `0 40px 80px rgba(11,25,20,0.3)`,
         }}
       >
         <div
           style={{
-            width: 72,
-            height: 10,
-            borderRadius: 999,
-            backgroundColor: "#0b261d",
             position: "absolute",
+            top: 14,
             left: "50%",
-            transform: "translateX(-50%)",
-            top: 8,
-            zIndex: 2,
+            marginLeft: -50,
+            width: 100,
+            height: 6,
+            borderRadius: 3,
+            background: "#1a2d26",
+            zIndex: 5,
           }}
         />
         <div
           style={{
             width: "100%",
             height: "100%",
-            borderRadius: 24,
+            borderRadius: 54,
             overflow: "hidden",
-            backgroundColor: c.card,
+            backgroundColor: c.white,
           }}
         >
           <Img
-            src={src}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const DisplayNumber: React.FC<{
-  value: number;
-  suffix: string;
-  delay: number;
-  color: string;
-  fontSize?: number;
-}> = ({ value, suffix, delay, color, fontSize = 100 }) => {
-  const count = useCounter(delay, value, 28);
-  const e = useSpringEntrance(delay, { damping: 12, mass: 0.8 });
-  return (
-    <div
-      style={{
-        opacity: e,
-        transform: `scale(${interpolate(e, [0, 1], [0.5, 1])})`,
-        color,
-        fontSize,
-        fontWeight: 800,
-        lineHeight: 0.84,
-        letterSpacing: "-0.04em",
-        textAlign: "center",
-        whiteSpace: "nowrap",
-      }}
-    >
-      {count.toFixed(value % 1 === 0 ? 0 : 1)}
-      {suffix}
-    </div>
-  );
-};
-
-const TextBlock: React.FC<{
-  children: React.ReactNode;
-  delay?: number;
-  dir?: "up" | "down" | "left" | "right" | "scale" | "scaleUp";
-  style?: React.CSSProperties;
-}> = ({ children, delay = 0, dir = "up", style }) => {
-  const e = useSpringEntrance(delay);
-  return (
-    <div style={{ ...entranceDir(e, dir), ...style }}>{children}</div>
-  );
-};
-
-const SlideLogo: React.FC = () => {
-  const eLogo = useSpringEntrance(0, { damping: 10, mass: 0.7 });
-  const eWordmark = useSpringEntrance(16, { damping: 10, mass: 0.6 });
-
-  return (
-    <AbsoluteFill
-      style={{
-        background: BC.dark,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 22,
-        }}
-      >
-        <div
-          style={{
-            ...entranceDir(eLogo, "scale"),
-            width: 88,
-            height: 88,
-            borderRadius: 24,
-            background: c.card,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-            boxShadow: "0 16px 44px rgba(0,0,0,0.18)",
-          }}
-        >
-          <Img
-            src={staticFile("logo1.png")}
+            src={staticFile(image)}
             style={{
-              width: 76,
-              height: 76,
-              objectFit: "contain",
+              width: "100%",
+              height: "100%",
+              objectFit: image === "logo1.png" ? "contain" : "cover",
+              padding: image === "logo1.png" ? 80 : 0,
+              backgroundColor: image === "logo1.png" ? c.white : undefined,
             }}
           />
         </div>
-        <div
-          style={{
-            ...entranceDir(eWordmark, "up"),
-            fontSize: 88,
-            fontWeight: 800,
-            color: c.card,
-            letterSpacing: "-0.05em",
-            lineHeight: 0.95,
-          }}
-        >
-          ODIN
-        </div>
       </div>
-      <TextBlock delay={32} dir="up">
-        <div
-          style={{
-            color: "rgba(255,255,255,0.6)",
-            fontSize: 22,
-            letterSpacing: "0.32em",
-            textTransform: "uppercase",
-            fontWeight: 600,
-            marginTop: 30,
-          }}
-        >
-          Personal Finance Management System
-        </div>
-      </TextBlock>
-      <TextBlock delay={42} dir="scale">
-        <div
-          style={{
-            width: 80,
-            height: 3,
-            borderRadius: 4,
-            backgroundColor: c.sage,
-            marginTop: 24,
-          }}
-        />
-      </TextBlock>
-    </AbsoluteFill>
+    </div>
   );
 };
 
-const SlideTagline: React.FC = () => {
-  const e1 = useSpringEntrance(0, { damping: 12, mass: 0.8 });
-  const e2 = useSpringEntrance(12);
-  const e3 = useSpringEntrance(24, { damping: 10, mass: 0.7 });
-  const e4 = useSpringEntrance(36);
-
+const Eyebrow: React.FC<{
+  text: string;
+  theme: Theme;
+  delay?: number;
+}> = ({ text, theme, delay = 0 }) => {
+  const reveal = useSpringReveal(delay);
   return (
-    <SplitSlide
-      background={BC.dark}
-      textWidth={560}
-      mediaWidth={300}
-      gap={28}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("budget-recommendation.png")}
-            delay={20}
-            anchor="bottom"
-            x={-64}
-            scale={1.14}
-            rotate={3}
-            entranceFrom="up"
-          />
-        </MediaStage>
-      }
-    >
-      <div>
-        <div
-          style={{
-            ...entranceDir(e1, "up"),
-            fontSize: 30,
-            fontWeight: 600,
-            color: "rgba(255,255,255,0.6)",
-            letterSpacing: "0.06em",
-            marginBottom: 18,
-          }}
-        >
-          &ldquo;A personal finance system&rdquo;
-        </div>
-        <div
-          style={{
-            ...entranceDir(e2, "right"),
-            fontSize: 38,
-            fontWeight: 700,
-            color: c.sage,
-            letterSpacing: "0.04em",
-            marginBottom: 18,
-          }}
-        >
-          built for how
-        </div>
-        <div
-          style={{
-            ...entranceDir(e3, "left"),
-            fontSize: 60,
-            fontWeight: 800,
-            color: c.card,
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            width: 400,
-          }}
-        >
-          Filipinos
-          <br />
-          actually live.
-        </div>
-        <div
-          style={{
-            ...entranceDir(e4, "up"),
-            width: 60,
-            height: 3,
-            borderRadius: 4,
-            backgroundColor: c.orange,
-            margin: "24px 0 0",
-          }}
-        />
-      </div>
-    </SplitSlide>
-  );
-};
-
-const SlideProblem: React.FC = () => {
-  const e1 = useSpringEntrance(0);
-  const e2 = useSpringEntrance(14, { damping: 10, mass: 0.9 });
-  const e3 = useSpringEntrance(28);
-
-  return (
-    <SplitSlide
-      background={BC.warm}
-      mediaSide="left"
-      textWidth={500}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("add-transaction.png")}
-            delay={16}
-            anchor="top"
-            x={18}
-            rotate={-4}
-            entranceFrom="down"
-          />
-        </MediaStage>
-      }
-    >
-      <div>
-        <div
-          style={{
-            ...entranceDir(e1, "down"),
-            fontSize: 28,
-            fontWeight: 500,
-            color: c.muted,
-            marginBottom: 28,
-          }}
-        >
-          Budget apps exist.
-        </div>
-        <div
-          style={{
-            ...entranceDir(e2, "scale"),
-            fontSize: 52,
-            fontWeight: 800,
-            color: c.pine,
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            marginBottom: 24,
-          }}
-        >
-          But none fit
-          <br />
-          <span style={{ color: c.orange }}>Filipino realities</span>.
-        </div>
-        <div
-          style={{
-            ...entranceDir(e3, "up"),
-            fontSize: 20,
-            fontWeight: 400,
-            color: c.muted,
-            lineHeight: 1.5,
-            width: 400,
-          }}
-        >
-          The right kind of budgeting guidance doesn&apos;t exist locally.
-        </div>
-      </div>
-    </SplitSlide>
-  );
-};
-
-const SlideGap: React.FC = () => {
-  const eTitle = useSpringEntrance(0);
-  const e1 = useSpringEntrance(10, { damping: 13, mass: 0.9 });
-  const e2 = useSpringEntrance(20, { damping: 13, mass: 0.9 });
-  const e3 = useSpringEntrance(30, { damping: 13, mass: 0.9 });
-
-  const chip = (e: number, label: string, desc: string) => (
     <div
       style={{
-        ...entranceDir(e, "right"),
-        padding: "16px 20px",
-        borderRadius: 18,
-        backgroundColor: c.card,
-        boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
-        width: 280,
+        ...reveal,
+        color: theme === "dark" ? c.tealLight : c.gold,
+        fontSize: 22,
+        fontWeight: 700,
+        letterSpacing: "0.16em",
+        textTransform: "uppercase",
+        marginBottom: 22,
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
+const SlideTitle: React.FC<{
+  text: string;
+  theme: Theme;
+  size?: "xl" | "lg" | "md";
+  delay?: number;
+  align?: "left" | "center";
+}> = ({ text, theme, size = "xl", delay = 6, align = "left" }) => {
+  const reveal = useSpringReveal(delay);
+  const t = themeStyles[theme];
+  const sizes: Record<string, { fontSize: number; lineHeight: number; maxWidth: number }> =
+    {
+      xl: { fontSize: 74, lineHeight: 0.94, maxWidth: 880 },
+      lg: { fontSize: 64, lineHeight: 0.96, maxWidth: 820 },
+      md: { fontSize: 52, lineHeight: 1, maxWidth: 760 },
+    };
+  const s = sizes[size];
+  return (
+    <div
+      style={{
+        ...reveal,
+        color: t.fg,
+        fontSize: s.fontSize,
+        fontWeight: 800,
+        letterSpacing: "-0.05em",
+        lineHeight: s.lineHeight,
+        maxWidth: s.maxWidth,
+        textAlign: align,
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
+const SlideCopy: React.FC<{
+  text: string;
+  theme: Theme;
+  delay?: number;
+  maxWidth?: number;
+}> = ({ text, theme, delay = 14, maxWidth = 740 }) => {
+  const reveal = useSpringReveal(delay);
+  const t = themeStyles[theme];
+  return (
+    <div
+      style={{
+        ...reveal,
+        color: t.muted,
+        fontSize: 30,
+        fontWeight: 400,
+        lineHeight: 1.42,
+        maxWidth,
+        marginTop: 26,
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
+const HeaderBlock: React.FC<{
+  eyebrow?: string;
+  title: string;
+  copy?: string;
+  theme: Theme;
+  titleSize?: "xl" | "lg" | "md";
+  align?: "left" | "center";
+  left?: number;
+  top?: number;
+  right?: number;
+}> = ({
+  eyebrow,
+  title,
+  copy,
+  theme,
+  titleSize = "xl",
+  align = "left",
+  left = 76,
+  top = 90,
+  right = 76,
+}) => (
+  <div
+    style={{
+      position: "absolute",
+      left,
+      top,
+      right,
+      zIndex: 4,
+      textAlign: align,
+    }}
+  >
+    {eyebrow ? <Eyebrow text={eyebrow} theme={theme} delay={0} /> : null}
+    <SlideTitle text={title} theme={theme} size={titleSize} delay={4} align={align} />
+    {copy ? <SlideCopy text={copy} theme={theme} delay={12} /> : null}
+  </div>
+);
+
+const IconBadge: React.FC<{
+  label: string;
+  variant?: "default" | "outline" | "gold";
+  dark?: boolean;
+  delay?: number;
+}> = ({ label, variant = "default", dark = false, delay = 0 }) => {
+  const reveal = useSpringReveal(delay);
+  const isGold = variant === "gold";
+  const fg = dark ? c.white : c.ink;
+  const rule = isGold ? c.gold : dark ? "rgba(255,255,255,0.32)" : c.teal;
+
+  return (
+    <div
+      style={{
+        ...reveal,
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "10px 0 12px",
+        backgroundColor: "transparent",
+        color: fg,
+        borderBottom: `1px solid ${dark ? "rgba(255,255,255,0.12)" : "rgba(26,138,116,0.18)"}`,
+        boxShadow: "none",
+        whiteSpace: "nowrap",
       }}
     >
       <div
         style={{
-          width: 20,
-          height: 20,
-          borderRadius: 10,
-          backgroundColor: c.orange,
-          marginBottom: 8,
+          width: 54,
+          height: 3,
+          borderRadius: 999,
+          backgroundColor: rule,
+          flexShrink: 0,
         }}
       />
       <div
         style={{
-          fontSize: 17,
-          fontWeight: 700,
-          color: c.ink,
-          marginBottom: 3,
+          fontSize: 25,
+          fontWeight: isGold ? 800 : 650,
+          letterSpacing: "-0.025em",
+          color: isGold ? (dark ? c.goldLight : c.ink) : fg,
         }}
       >
         {label}
       </div>
-      <div
-        style={{
-          fontSize: 14,
-          fontWeight: 400,
-          color: c.muted,
-          lineHeight: 1.4,
-        }}
-      >
-        {desc}
-      </div>
     </div>
-  );
-
-  return (
-    <SplitSlide
-      background={BC.warm}
-      textWidth={560}
-      gap={40}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("history.png")}
-            delay={24}
-            anchor="middle"
-            x={8}
-            rotate={4}
-            entranceFrom="down"
-          />
-        </MediaStage>
-      }
-    >
-      <div>
-        <div
-          style={{
-            ...entranceDir(eTitle, "up"),
-            fontSize: 34,
-            fontWeight: 800,
-            color: c.pine,
-            lineHeight: 1.05,
-            letterSpacing: "-0.02em",
-            marginBottom: 24,
-            width: 280,
-          }}
-        >
-          Majority of finance
-          <br />
-          management apps miss:
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-          {chip(e1, "Variable Income", "Freelance, commissions, irregular pay cycles")}
-          {chip(e2, "Family Obligations", "Padala and support for parents, siblings, and relatives")}
-          {chip(e3, "Cultural Spending", "Paluwagan, handaan, fiestas, and community giving")}
-        </div>
-      </div>
-    </SplitSlide>
   );
 };
 
-const SlideStats: React.FC = () => {
-  const eLabel1 = useSpringEntrance(18);
-  const eLabel2 = useSpringEntrance(18);
-  const eKicker = useSpringEntrance(0, { damping: 10, mass: 0.8 });
-  const eNote = useSpringEntrance(28, { damping: 10, mass: 0.8 });
-
+const LayoutCenter: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => {
   return (
-    <SplitSlide
-      background={BC.warm}
-      mediaSide="left"
-      textWidth={620}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("dashboard.png")}
-            delay={18}
-            anchor="bottom"
-            x={20}
-            rotate={-3}
-            entranceFrom="up"
+    <SceneWrap theme={scene.theme}>
+      <HeaderBlock
+        eyebrow={scene.eyebrow}
+        title={scene.title}
+        copy={scene.copy}
+        theme={scene.theme}
+        left={76}
+        top={100}
+      />
+      <PhoneFrame image={scene.image} variant="hero" delay={16} />
+      <div
+        style={{
+          position: "absolute",
+          left: 76,
+          right: 76,
+          bottom: 80,
+          zIndex: 5,
+          display: "flex",
+          gap: 16,
+          justifyContent: "center",
+        }}
+      >
+        {scene.icons.map((item, i) => (
+          <IconBadge
+            key={item}
+            label={item}
+            variant={i === 1 ? "gold" : "default"}
+            dark
+            delay={28 + i * 6}
           />
-        </MediaStage>
-      }
+        ))}
+      </div>
+    </SceneWrap>
+  );
+};
+
+const LayoutSplit: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => (
+  <SceneWrap theme={scene.theme}>
+    <div
+      style={{
+        position: "absolute",
+        left: 76,
+        top: 130,
+        width: 440,
+        zIndex: 4,
+      }}
     >
+      <SlideTitle text={scene.title} theme={scene.theme} size="lg" delay={4} />
+      <SlideCopy text={scene.copy} theme={scene.theme} delay={10} maxWidth={420} />
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 26,
+          gap: 16,
+          marginTop: 48,
         }}
       >
-        <div
-          style={{
-            ...entranceDir(eKicker, "up"),
-            fontSize: 22,
-            fontWeight: 700,
-            color: c.muted,
-            textTransform: "uppercase",
-            letterSpacing: "0.12em",
-          }}
-        >
-          Survey signal
-        </div>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 24,
-          }}
-        >
-          <div
-            style={{
-              padding: "24px 20px",
-              borderRadius: 24,
-              backgroundColor: c.card,
-              boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
-              width: 280,
-            }}
-          >
-            <DisplayNumber
-              value={22.2}
-              suffix="%"
-              delay={8}
-              color={c.orange}
-              fontSize={84}
-            />
-            <div
-              style={{
-                ...entranceDir(eLabel1, "up"),
-                fontSize: 19,
-                fontWeight: 600,
-                color: c.ink,
-                marginTop: 12,
-                textAlign: "center",
-                lineHeight: 1.35,
-              }}
-            >
-              still manage money with a notebook or spreadsheet
-            </div>
-          </div>
-          <div
-            style={{
-              padding: "24px 20px",
-              borderRadius: 24,
-              backgroundColor: c.card,
-              boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
-              width: 280,
-            }}
-          >
-            <DisplayNumber
-              value={57.8}
-              suffix="%"
-              delay={8}
-              color={c.orange}
-              fontSize={84}
-            />
-            <div
-              style={{
-                ...entranceDir(eLabel2, "up"),
-                fontSize: 19,
-                fontWeight: 600,
-                color: c.ink,
-                marginTop: 12,
-                textAlign: "center",
-                lineHeight: 1.35,
-              }}
-            >
-              reported using no dedicated budgeting tool
-            </div>
-          </div>
-        </div>
-        <div
-          style={{
-            ...entranceDir(eNote, "up"),
-            fontSize: 18,
-            lineHeight: 1.45,
-            color: c.muted,
-            maxWidth: 560,
-          }}
-        >
-          The problem is not budgeting effort. It&apos;s product fit.
-        </div>
-      </div>
-    </SplitSlide>
-  );
-};
-
-const SlideSolution: React.FC = () => {
-  const e1 = useSpringEntrance(0, { damping: 10, mass: 0.8 });
-  const e2 = useSpringEntrance(14);
-  const e3 = useSpringEntrance(26);
-
-  return (
-    <SplitSlide
-      background={BC.dark}
-      textWidth={430}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("budget-advice.png")}
-            delay={18}
-            anchor="top"
-            x={6}
-            rotate={-4}
-            entranceFrom="down"
+        {scene.icons.map((item, i) => (
+          <IconBadge
+            key={item}
+            label={item}
+            variant={i === 2 ? "gold" : "outline"}
+            delay={20 + i * 6}
           />
-        </MediaStage>
-      }
-    >
-      <div>
-        <div
-          style={{
-            ...entranceDir(e1, "scale"),
-            fontSize: 68,
-            fontWeight: 800,
-            color: c.card,
-            lineHeight: 1,
-            letterSpacing: "-0.03em",
-          }}
-        >
-          Odin
-        </div>
-        <div
-          style={{
-            ...entranceDir(e2, "down"),
-            fontSize: 26,
-            fontWeight: 600,
-            color: c.sage,
-            marginTop: 18,
-            letterSpacing: "0.04em",
-          }}
-        >
-          meets Filipinos where they are.
-        </div>
-        <div
-          style={{
-            ...entranceDir(e3, "up"),
-            fontSize: 19,
-            fontWeight: 400,
-            color: "rgba(255,255,255,0.6)",
-            marginTop: 22,
-            lineHeight: 1.5,
-          }}
-        >
-          A calm financial control room with explainable guidance and room
-          for real priorities.
-        </div>
+        ))}
       </div>
-    </SplitSlide>
-  );
-};
+    </div>
+    <PhoneFrame image={scene.image} variant="right" delay={14} />
+  </SceneWrap>
+);
 
-const SlideHowItWorks: React.FC = () => {
-  const eLabel = useSpringEntrance(0, { damping: 10, mass: 0.7 });
-  const eTitle = useSpringEntrance(6, { damping: 10, mass: 0.7 });
-  const eSteps = [
-    useSpringEntrance(14, { damping: 11, mass: 0.8 }),
-    useSpringEntrance(22, { damping: 11, mass: 0.8 }),
-    useSpringEntrance(30, { damping: 11, mass: 0.8 }),
-  ];
-
-  const steps = [
-    {
-      number: "1",
-      title: "Capture",
-      copy: "Log expenses with Filipino-relevant categories.",
-      color: c.pine,
-      dir: "left" as const,
-    },
-    {
-      number: "2",
-      title: "Learn",
-      copy: "Patterns become forecasts, risk signals, and spending context.",
-      color: c.pineSoft,
-      dir: "up" as const,
-    },
-    {
-      number: "3",
-      title: "Guide",
-      copy: "Budgets, alerts, and forecasts turn into clear next moves.",
-      color: c.orange,
-      dir: "right" as const,
-    },
-  ];
-
-  return (
-    <SplitSlide
-      background={BC.light}
-      mediaSide="left"
-      textWidth={620}
-      gap={32}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("budget-recommendation.png")}
-            delay={20}
-            anchor="bottom"
-            x={10}
-            rotate={2}
-            entranceFrom="up"
-          />
-        </MediaStage>
-      }
-    >
-      <div>
-        <div
-          style={{
-            ...entranceDir(eLabel, "up"),
-            fontSize: 20,
-            fontWeight: 700,
-            color: c.muted,
-            textTransform: "uppercase",
-            letterSpacing: "0.12em",
-            marginBottom: 24,
-          }}
-        >
-          How It Works
-        </div>
-        <div
-          style={{
-            ...entranceDir(eTitle, "up"),
-            fontSize: 38,
-            fontWeight: 800,
-            color: c.ink,
-            lineHeight: 1.05,
-            marginBottom: 22,
-          }}
-        >
-          From repeated entries to forward-looking advice.
-        </div>
-        <div style={{ display: "flex", flexDirection: "row", gap: 14 }}>
-          {steps.map((step, i) => (
-            <div
-              key={step.title}
-              style={{
-                ...entranceDir(eSteps[i], step.dir),
-                padding: "20px 18px",
-                borderRadius: 20,
-                backgroundColor: c.card,
-                boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
-                flex: 1,
-                minHeight: 190,
-              }}
-            >
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 999,
-                  backgroundColor: step.color,
-                  color: c.card,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 800,
-                  fontSize: 18,
-                  marginBottom: 12,
-                }}
-              >
-                {step.number}
-              </div>
-              <div
-                style={{
-                  fontSize: 22,
-                  fontWeight: 800,
-                  color: c.ink,
-                  marginBottom: 8,
-                }}
-              >
-                {step.title}
-              </div>
-              <div
-                style={{
-                  fontSize: 15,
-                  fontWeight: 400,
-                  color: c.muted,
-                  lineHeight: 1.45,
-                }}
-              >
-                {step.copy}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </SplitSlide>
-  );
-};
-
-const SlideFeature: React.FC = () => {
-  const eTitle = useSpringEntrance(0, { damping: 11, mass: 0.8 });
-  const eCopy = useSpringEntrance(8, { damping: 11, mass: 0.8 });
-  const eItems = [
-    useSpringEntrance(10, { damping: 13, mass: 0.9 }),
-    useSpringEntrance(18, { damping: 13, mass: 0.9 }),
-    useSpringEntrance(26, { damping: 13, mass: 0.9 }),
-    useSpringEntrance(34, { damping: 13, mass: 0.9 }),
-  ];
-
-  const items = [
-    { label: "Forecasts", desc: "Predictive spending projections" },
-    { label: "Alerts", desc: "Anomaly detection & warnings" },
-    { label: "Savings", desc: "Goal tracking & progress" },
-    { label: "Debt", desc: "Avalanche & snowball plans" },
-  ];
-
-  return (
-    <SplitSlide
-      background={BC.dark}
-      textWidth={430}
-      media={
-        <MediaStage>
-          <PhoneFrame
-            src={staticFile("savings-debt.png")}
-            delay={18}
-            anchor="middle"
-            x={-12}
-            rotate={-3}
-            entranceFrom="down"
-          />
-        </MediaStage>
-      }
-    >
-      <div>
-        <div
-          style={{
-            ...entranceDir(eTitle, "up"),
-            fontSize: 38,
-            fontWeight: 800,
-            color: c.card,
-            lineHeight: 1.05,
-            marginBottom: 28,
-          }}
-        >
-          Everything
-          <br />
-          you need
-        </div>
-        <div
-          style={{
-            ...entranceDir(eCopy, "up"),
-            fontSize: 18,
-            lineHeight: 1.5,
-            color: "rgba(255,255,255,0.62)",
-            marginBottom: 22,
-          }}
-        >
-          Forecasting, protection, and planning in one budgeting loop.
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {items.map((item, i) => (
-            <div
-              key={item.label}
-              style={{
-                ...entranceDir(eItems[i], "right"),
-                padding: "14px 18px",
-                borderRadius: 14,
-                border: `1px solid rgba(216,229,220,0.12)`,
-                backgroundColor: "rgba(255,255,255,0.04)",
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 18,
-                  fontWeight: 700,
-                  color: c.sage,
-                  marginBottom: 2,
-                }}
-              >
-                {item.label}
-              </div>
-              <div
-                style={{
-                  fontSize: 14,
-                  fontWeight: 400,
-                  color: "rgba(255,255,255,0.5)",
-                }}
-              >
-                {item.desc}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </SplitSlide>
-  );
-};
-
-const SlideFinal: React.FC = () => {
-  const eLine1 = useSpringEntrance(0, { damping: 10, mass: 0.7 });
-  const eLine2 = useSpringEntrance(16, { damping: 8, mass: 0.8 });
-  const eSub = useSpringEntrance(30);
-  const eDeco = useSpringEntrance(42);
-
-  return (
-    <AbsoluteFill
+const LayoutPortrait: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => (
+  <SceneWrap theme={scene.theme}>
+    <HeaderBlock
+      title={scene.title}
+      copy={scene.copy}
+      theme={scene.theme}
+      titleSize="md"
+      left={76}
+      top={88}
+      right={76}
+    />
+    <PhoneFrame image={scene.image} variant="hero" delay={18} />
+    <div
       style={{
-        background: BC.dark,
+        position: "absolute",
+        left: 76,
+        right: 76,
+        bottom: 82,
+        zIndex: 5,
         display: "flex",
-        alignItems: "center",
+        gap: 14,
+        flexWrap: "wrap",
         justifyContent: "center",
-        textAlign: "center",
-        padding: "0 80px",
-        position: "relative",
-        overflow: "hidden",
+      }}
+    >
+      {scene.icons.map((item, i) => (
+        <IconBadge
+          key={item}
+          label={item}
+          variant={i === 2 ? "gold" : "outline"}
+          delay={26 + i * 5}
+        />
+      ))}
+    </div>
+  </SceneWrap>
+);
+
+const StatCard: React.FC<{
+  stat: string;
+  label: string;
+  delay?: number;
+  accent?: boolean;
+}> = ({ stat, label, delay = 0, accent = false }) => {
+  const reveal = useSpringReveal(delay);
+  return (
+    <div
+      style={{
+        ...reveal,
+        display: "flex",
+        alignItems: "flex-end",
+        gap: 28,
+        padding: "24px 0 30px",
+        borderBottom: `1px solid rgba(26,138,116,0.18)`,
       }}
     >
       <div
         style={{
-          ...entranceDir(eDeco, "scale"),
-          position: "absolute",
-          width: 500,
-          height: 500,
-          borderRadius: "50%",
-          background: `radial-gradient(circle, rgba(216,229,220,0.06) 0%, transparent 60%)`,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
+          fontSize: 148,
+          fontWeight: 800,
+          letterSpacing: "-0.06em",
+          color: accent ? c.gold : c.teal,
+          lineHeight: 0.78,
+          minWidth: 420,
         }}
-      />
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div
-          style={{
-            ...entranceDir(eLine1, "up"),
-            fontSize: 34,
-            fontWeight: 600,
-            color: c.sage,
-            letterSpacing: "0.04em",
-            marginBottom: 18,
-          }}
-        >
-          Odin Makes Truly
-        </div>
-        <div
-          style={{
-            ...entranceDir(eLine2, "scale"),
-            fontSize: 72,
-            fontWeight: 800,
-            color: c.card,
-            lineHeight: 1,
-            letterSpacing: "-0.03em",
-            marginBottom: 24,
-          }}
-        >
-          Filipino Budgets
-        </div>
-        <div
-          style={{
-            ...entranceDir(eSub, "up"),
-            fontSize: 20,
-            fontWeight: 400,
-            color: "rgba(255,255,255,0.6)",
-            maxWidth: 440,
-            lineHeight: 1.45,
-            margin: "0 auto",
-          }}
-        >
-          Variable income, family obligations, protected essentials, and
-          forward-looking guidance.
-        </div>
+      >
+        {stat}
       </div>
-    </AbsoluteFill>
+      <div
+        style={{
+          fontSize: 31,
+          lineHeight: 1.12,
+          color: c.ink,
+          fontWeight: 700,
+          maxWidth: 360,
+          paddingBottom: 10,
+        }}
+      >
+        {label}
+      </div>
+    </div>
   );
 };
 
-const SLIDES = [
-  SlideLogo,
-  SlideTagline,
-  SlideProblem,
-  SlideGap,
-  SlideStats,
-  SlideSolution,
-  SlideHowItWorks,
-  SlideFeature,
-  SlideFinal,
-];
+const LayoutStats: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => {
+  const [stat1, stat2] = scene.icons;
+  return (
+    <SceneWrap theme={scene.theme}>
+      <HeaderBlock
+        eyebrow={scene.eyebrow}
+        title={scene.title}
+        copy={scene.copy}
+        theme={scene.theme}
+        titleSize="lg"
+        left={76}
+        top={100}
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: 76,
+          right: 76,
+          top: 520,
+          display: "flex",
+          flexDirection: "column",
+          gap: 18,
+          zIndex: 5,
+        }}
+      >
+        <StatCard
+          stat={stat1 ?? ""}
+          label="still use notebooks or spreadsheets"
+          delay={16}
+        />
+        <StatCard
+          stat={stat2 ?? ""}
+          label="use no dedicated budgeting app"
+          delay={24}
+          accent
+        />
+      </div>
+    </SceneWrap>
+  );
+};
+
+const LayoutColumn: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => (
+  <SceneWrap theme={scene.theme}>
+    <PhoneFrame image={scene.image} variant="left" delay={8} />
+    <div
+      style={{
+        position: "absolute",
+        left: 560,
+        top: 130,
+        right: 76,
+        zIndex: 4,
+      }}
+    >
+      <SlideTitle text={scene.title} theme={scene.theme} size="md" delay={6} />
+      <SlideCopy text={scene.copy} theme={scene.theme} delay={12} maxWidth={440} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 14,
+          marginTop: 40,
+        }}
+      >
+        {scene.icons.map((item, i) => (
+          <IconBadge
+            key={item}
+            label={item}
+            variant={i === 2 ? "gold" : "outline"}
+            delay={18 + i * 6}
+          />
+        ))}
+      </div>
+    </div>
+  </SceneWrap>
+);
+
+const LayoutStatement: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => (
+  <SceneWrap theme={scene.theme}>
+    <div
+      style={{
+        position: "absolute",
+        left: 76,
+        right: 76,
+        top: 110,
+        zIndex: 4,
+      }}
+    >
+      <SlideTitle
+        text={scene.title}
+        theme={scene.theme}
+        size="xl"
+        delay={4}
+      />
+      <SlideCopy
+        text={scene.copy}
+        theme={scene.theme}
+        delay={12}
+        maxWidth={760}
+      />
+    </div>
+    <div
+      style={{
+        position: "absolute",
+        left: 76,
+        right: 76,
+        bottom: 80,
+        zIndex: 5,
+        display: "flex",
+        gap: 16,
+      }}
+    >
+      {scene.icons.map((item, i) => (
+        <IconBadge
+          key={item}
+          label={item}
+          variant={i === 1 ? "gold" : "default"}
+          dark
+          delay={20 + i * 6}
+        />
+      ))}
+    </div>
+    <PhoneFrame image={scene.image} variant="statement" delay={16} />
+  </SceneWrap>
+);
+
+const FlowCard: React.FC<{
+  label: string;
+  index: number;
+  dark?: boolean;
+}> = ({ label, index, dark = false }) => {
+  const reveal = useSpringReveal(18 + index * 8);
+  return (
+    <div
+      style={{
+        ...reveal,
+        flex: 1,
+        borderRadius: 44,
+        backgroundColor: index === 1 ? c.teal : c.white,
+        color: index === 1 ? c.white : c.ink,
+        padding: "32px 28px",
+        boxShadow:
+          index === 1
+            ? `0 16px 40px rgba(26,138,116,0.25)`
+            : `0 16px 36px rgba(11,25,20,0.06)`,
+        position: "relative",
+      }}
+    >
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 24,
+          backgroundColor:
+            index === 1
+              ? "rgba(255,255,255,0.2)"
+              : index === 2
+                ? c.gold
+                : c.teal,
+          color: c.white,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 22,
+          fontWeight: 800,
+          marginBottom: 20,
+        }}
+      >
+        {label.slice(0, 1)}
+      </div>
+      <div style={{ fontSize: 30, fontWeight: 800 }}>{label}</div>
+      {index < 2 ? (
+        <div
+          style={{
+            position: "absolute",
+            right: -22,
+            top: "50%",
+            marginTop: -8,
+            fontSize: 28,
+            color: c.sageDeep,
+            opacity: 0.5,
+          }}
+        >
+          →
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+const LayoutFlow: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => (
+  <SceneWrap theme={scene.theme}>
+    <HeaderBlock
+      eyebrow={scene.eyebrow}
+      title={scene.title}
+      copy={scene.copy}
+      theme={scene.theme}
+      titleSize="lg"
+      left={76}
+      top={90}
+    />
+    <div
+      style={{
+          position: "absolute",
+          left: 76,
+          right: 76,
+          top: 520,
+          display: "flex",
+        gap: 18,
+        zIndex: 5,
+      }}
+    >
+      {scene.icons.map((item, i) => (
+        <FlowCard key={item} label={item} index={i} />
+      ))}
+    </div>
+    <PhoneFrame image={scene.image} variant="flow" delay={30} />
+  </SceneWrap>
+);
+
+const FeatureCard: React.FC<{
+  label: string;
+  delay?: number;
+}> = ({ label, delay = 0 }) => {
+  const reveal = useSpringReveal(delay);
+  return (
+    <div
+      style={{
+        ...reveal,
+        borderRadius: 30,
+        backgroundColor: c.white,
+        padding: "22px 20px",
+        boxShadow: `0 16px 36px rgba(11,25,20,0.06)`,
+        border: `1px solid ${c.sage}`,
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+      }}
+    >
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: 24,
+          backgroundColor: c.teal,
+          color: c.white,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: 22,
+          fontWeight: 800,
+          flexShrink: 0,
+        }}
+      >
+        {label.slice(0, 1)}
+      </div>
+      <div style={{ fontSize: 24, fontWeight: 800 }}>{label}</div>
+    </div>
+  );
+};
+
+const LayoutGrid: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => (
+  <SceneWrap theme={scene.theme}>
+    <HeaderBlock
+      eyebrow=""
+      title={scene.title}
+      copy={scene.copy}
+      theme={scene.theme}
+      titleSize="md"
+      left={76}
+      top={90}
+    />
+    <PhoneFrame image={scene.image} variant="grid" delay={8} />
+    <div
+      style={{
+        position: "absolute",
+        left: 76,
+        right: 76,
+        top: 1300,
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: 14,
+        zIndex: 5,
+      }}
+    >
+      {scene.icons.slice(0, 8).map((item, i) => (
+        <FeatureCard key={item} label={item} delay={16 + i * 4} />
+      ))}
+    </div>
+  </SceneWrap>
+);
+
+const LayoutFinal: React.FC<{
+  scene: (typeof scenes)[number];
+}> = ({ scene }) => {
+  const logo = useSpringReveal(0);
+  const title = useSpringReveal(10);
+  const copy = useSpringReveal(20);
+  const icons = useSpringReveal(30);
+  return (
+    <SceneWrap theme={scene.theme}>
+      <AbsoluteFill
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 76,
+          textAlign: "center",
+          zIndex: 3,
+        }}
+      >
+        <div
+          style={{
+            ...logo,
+            width: 160,
+            height: 160,
+            borderRadius: 48,
+            backgroundColor: c.white,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 40,
+            boxShadow: `0 20px 50px rgba(11,25,20,0.15)`,
+          }}
+        >
+          <Img
+            src={staticFile("logo1.png")}
+            style={{ width: 120, height: 120, objectFit: "contain" }}
+          />
+        </div>
+        <div
+          style={{
+            ...title,
+            fontSize: 88,
+            fontWeight: 800,
+            letterSpacing: "-0.055em",
+            lineHeight: 0.92,
+            color: c.white,
+            maxWidth: 820,
+          }}
+        >
+          Odin makes truly Filipino budgets.
+        </div>
+        <div
+          style={{
+            ...copy,
+            fontSize: 30,
+            lineHeight: 1.4,
+            color: "rgba(255,255,255,0.55)",
+            maxWidth: 680,
+            marginTop: 32,
+          }}
+        >
+          Cultural fit, practical intelligence, and calm financial control.
+        </div>
+        <div
+          style={{
+            ...icons,
+            display: "flex",
+            gap: 16,
+            marginTop: 48,
+          }}
+        >
+          {scene.icons.map((item, i) => (
+            <IconBadge
+              key={item}
+              label={item}
+              variant={i === 1 ? "gold" : "default"}
+              dark
+              delay={0}
+            />
+          ))}
+        </div>
+      </AbsoluteFill>
+    </SceneWrap>
+  );
+};
+
+const layoutMap: Record<
+  string,
+  React.FC<{ scene: (typeof scenes)[number] }>
+> = {
+  center: LayoutCenter,
+  split: LayoutSplit,
+  portrait: LayoutPortrait,
+  stats: LayoutStats,
+  column: LayoutColumn,
+  statement: LayoutStatement,
+  flow: LayoutFlow,
+  grid: LayoutGrid,
+  final: LayoutFinal,
+};
+
+const Scene: React.FC<{ scene: (typeof scenes)[number] }> = ({ scene }) => {
+  const Layout = layoutMap[scene.layout];
+  return <Layout scene={scene} />;
+};
 
 export const Main: React.FC = () => {
   const { fps, durationInFrames } = useVideoConfig();
-
   return (
-    <AbsoluteFill style={{ fontFamily }}>
+    <AbsoluteFill style={{ fontFamily, backgroundColor: c.pearl }}>
       <Audio
         src={staticFile(
           "Fun & Upbeat Background Music For Advertising Videos [Royalty Free - Commercial Use] [KhZLU-Hge-c].mp3",
@@ -1149,16 +1080,21 @@ export const Main: React.FC = () => {
           interpolate(
             f,
             [durationInFrames - fps * 2, durationInFrames],
-            [1, 0],
-            { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-          ) * 0.22
+            [0.22, 0],
+            {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            },
+          )
         }
       />
-      {SLIDES.map((Slide, i) => (
-        <Sequence key={i} from={STARTS[i]} durationInFrames={SLIDE_DURATION}>
-          <SlideWrap>
-            <Slide />
-          </SlideWrap>
+      {scenes.map((scene, i) => (
+        <Sequence
+          key={scene.title}
+          from={STARTS[i]}
+          durationInFrames={SLIDE_DURATION}
+        >
+          <Scene scene={scene} />
         </Sequence>
       ))}
     </AbsoluteFill>
