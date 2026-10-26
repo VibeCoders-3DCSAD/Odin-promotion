@@ -33,8 +33,8 @@ const scenes = [
     theme: "dark" as Theme,
     eyebrow: "Personal finance management system",
     title: "A serious budget system for real Filipino life.",
-    copy: "Odin turns daily money choices into forecasting, alerts, and calm guidance.",
-    image: "dashboard.png",
+    copy: "Budgie turns daily money choices into forecasting, alerts, and calm guidance.",
+    image: "budgie-home.png",
     phone: "hero" as const,
     layout: "center" as const,
     icons: ["Forecast", "Detect", "Plan"],
@@ -44,7 +44,7 @@ const scenes = [
     eyebrow: "",
     title: "Budget apps exist. Local guidance still does not fit.",
     copy: "The issue is not only expense logging. It is advice that understands income timing, family duties, and shared obligations.",
-    image: "add-transaction.png",
+    image: "budgie-new-transaction.png",
     phone: "right" as const,
     layout: "split" as const,
     icons: ["No context", "Generic rules", "Weak fit"],
@@ -53,8 +53,8 @@ const scenes = [
     theme: "light" as Theme,
     eyebrow: "",
     title: "Needs, obligations, and goals rarely arrive in neat columns.",
-    copy: "Odin treats family support, bills, savings, debt, insurance, and community spending as part of the same financial picture.",
-    image: "history.png",
+    copy: "Budgie treats family support, bills, savings, debt, insurance, and community spending as part of the same financial picture.",
+    image: "budgie-activity.png",
     phone: "large" as const,
     layout: "portrait" as const,
     icons: ["Variable pay", "Family support", "Community spend"],
@@ -64,7 +64,7 @@ const scenes = [
     eyebrow: "The evidence",
     title: "People are not failing budgeting tools.",
     copy: "Notebooks, spreadsheets, and no dedicated app are signals that current products are not becoming habits.",
-    image: "budget-recommendation.png",
+    image: "budgie-budget-suggestion.png",
     phone: "none" as const,
     layout: "stats" as const,
     icons: ["22.2% manual", "57.8% no app"],
@@ -74,7 +74,7 @@ const scenes = [
     eyebrow: "",
     title: "The model is shaped around local financial behavior.",
     copy: "Filipino-grounded categories make the system more useful than a generic expense tracker with renamed labels.",
-    image: "assistant.png",
+    image: "budgie-scheduled.png",
     phone: "left" as const,
     layout: "column" as const,
     icons: ["Government", "Household", "Community"],
@@ -82,9 +82,9 @@ const scenes = [
   {
     theme: "dark" as Theme,
     eyebrow: "",
-    title: "Odin meets Filipinos where they are.",
+    title: "Budgie meets Filipinos where they are.",
     copy: "A calm financial control room for every income level, obligation, and goal.",
-    image: "budget-advice.png",
+    image: "budgie-budget-suggestion.png",
     phone: "small" as const,
     layout: "statement" as const,
     icons: ["Explain", "Adjust", "Protect"],
@@ -93,8 +93,8 @@ const scenes = [
     theme: "pearl" as Theme,
     eyebrow: "The product loop",
     title: "Input becomes pattern. Pattern becomes guidance.",
-    copy: "Logging is only the start. Repeated entries teach Odin how to forecast, detect anomalies, and suggest practical next moves.",
-    image: "budget-recommendation.png",
+    copy: "Logging is only the start. Repeated entries teach Budgie how to forecast, detect anomalies, and suggest practical next moves.",
+    image: "budgie-forecast.png",
     phone: "none" as const,
     layout: "flow" as const,
     icons: ["Capture", "Learn", "Guide"],
@@ -104,7 +104,7 @@ const scenes = [
     eyebrow: "",
     title: "Visibility, prediction, protection, and planning in one loop.",
     copy: "Dashboard, budget suggestions, spending forecasts, alerts, savings, debt, insurance, and behavioral profiling work together.",
-    image: "savings-debt.png",
+    image: "budgie-home-summaries.png",
     phone: "small" as const,
     layout: "grid" as const,
     icons: [
@@ -121,9 +121,9 @@ const scenes = [
   {
     theme: "dark" as Theme,
     eyebrow: "",
-    title: "Odin makes truly Filipino budgets.",
+    title: "Budgie makes truly Filipino budgets.",
     copy: "Built for variable income, family obligations, protected essentials, and forward-looking guidance.",
-    image: "logo1.png",
+    image: "budgie-logo.png",
     phone: "none" as const,
     layout: "final" as const,
     icons: ["Truly Filipino", "Practical intelligence"],
@@ -184,8 +184,8 @@ const SceneWrap: React.FC<{
           borderRadius: "50%",
           background:
             theme === "dark"
-              ? "radial-gradient(circle, rgba(26,138,116,0.08) 0%, transparent 70%)"
-              : "radial-gradient(circle, rgba(26,138,116,0.05) 0%, transparent 70%)",
+              ? "radial-gradient(circle, rgba(0,77,27,0.08) 0%, transparent 70%)"
+              : "radial-gradient(circle, rgba(0,77,27,0.05) 0%, transparent 70%)",
           right: -200 + drift * 2,
           top: 80,
         }}
@@ -198,10 +198,10 @@ const SceneWrap: React.FC<{
           borderRadius: "50%",
           background:
             theme === "dark"
-              ? "radial-gradient(circle, rgba(196,154,92,0.06) 0%, transparent 70%)"
+              ? "radial-gradient(circle, rgba(65,237,164,0.06) 0%, transparent 70%)"
               : theme === "pearl"
-                ? "radial-gradient(circle, rgba(26,138,116,0.04) 0%, transparent 70%)"
-                : "radial-gradient(circle, rgba(26,138,116,0.04) 0%, transparent 70%)",
+                ? "radial-gradient(circle, rgba(0,77,27,0.04) 0%, transparent 70%)"
+                : "radial-gradient(circle, rgba(0,77,27,0.04) 0%, transparent 70%)",
           left: -160 - drift,
           bottom: 100 - drift,
         }}
@@ -215,7 +215,7 @@ const SceneWrap: React.FC<{
           height: 3,
           background:
             theme === "dark"
-              ? `linear-gradient(90deg, transparent, ${c.teal}, transparent)`
+              ? `linear-gradient(90deg, transparent, ${c.tealLight}, transparent)`
               : `linear-gradient(90deg, transparent, ${c.gold}, transparent)`,
         }}
       />
@@ -287,7 +287,7 @@ const PhoneFrame: React.FC<{
           height: "100%",
           borderRadius: 64,
           padding: 10,
-          background: `linear-gradient(145deg, ${c.ink}, #1a2d26)`,
+          background: `linear-gradient(145deg, ${c.ink}, #1b1c1a)`,
           boxShadow:
             variant === "left" || variant === "right"
               ? `0 30px 60px rgba(11,25,20,0.25)`
@@ -303,7 +303,7 @@ const PhoneFrame: React.FC<{
             width: 100,
             height: 6,
             borderRadius: 3,
-            background: "#1a2d26",
+            background: "#1b1c1a",
             zIndex: 5,
           }}
         />
@@ -321,9 +321,9 @@ const PhoneFrame: React.FC<{
             style={{
               width: "100%",
               height: "100%",
-              objectFit: image === "logo1.png" ? "contain" : "cover",
-              padding: image === "logo1.png" ? 80 : 0,
-              backgroundColor: image === "logo1.png" ? c.white : undefined,
+              objectFit: image === "budgie-logo.png" ? "contain" : "cover",
+              padding: image === "budgie-logo.png" ? 80 : 0,
+              backgroundColor: image === "budgie-logo.png" ? c.white : undefined,
             }}
           />
         </div>
@@ -472,7 +472,7 @@ const IconBadge: React.FC<{
         padding: "10px 0 12px",
         backgroundColor: "transparent",
         color: fg,
-        borderBottom: `1px solid ${dark ? "rgba(255,255,255,0.12)" : "rgba(26,138,116,0.18)"}`,
+        borderBottom: `1px solid ${dark ? "rgba(255,255,255,0.12)" : "rgba(0,77,27,0.18)"}`,
         boxShadow: "none",
         whiteSpace: "nowrap",
       }}
@@ -631,7 +631,7 @@ const StatCard: React.FC<{
         alignItems: "flex-end",
         gap: 28,
         padding: "24px 0 30px",
-        borderBottom: `1px solid rgba(26,138,116,0.18)`,
+        borderBottom: `1px solid rgba(0,77,27,0.18)`,
       }}
     >
       <div
@@ -810,7 +810,7 @@ const FlowCard: React.FC<{
         padding: "32px 28px",
         boxShadow:
           index === 1
-            ? `0 16px 40px rgba(26,138,116,0.25)`
+            ? `0 16px 40px rgba(0,77,27,0.25)`
             : `0 16px 36px rgba(11,25,20,0.06)`,
         position: "relative",
       }}
@@ -991,13 +991,14 @@ const LayoutFinal: React.FC<{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            overflow: "hidden",
             marginBottom: 40,
             boxShadow: `0 20px 50px rgba(11,25,20,0.15)`,
           }}
         >
           <Img
-            src={staticFile("logo1.png")}
-            style={{ width: 120, height: 120, objectFit: "contain" }}
+            src={staticFile("budgie-logo.png")}
+            style={{ width: 160, height: 160, objectFit: "cover" }}
           />
         </div>
         <div
@@ -1011,7 +1012,7 @@ const LayoutFinal: React.FC<{
             maxWidth: 820,
           }}
         >
-          Odin makes truly Filipino budgets.
+          Budgie makes truly Filipino budgets.
         </div>
         <div
           style={{

@@ -1,18 +1,19 @@
+// Budgie V5 palette. Key names predate the rebrand; the values are Budgie's.
 export const c = {
-  deepest: "#0b1914",
-  deep: "#162b22",
-  deepAlt: "#1e352c",
-  teal: "#1a8a74",
-  tealLight: "#35ad95",
-  sage: "#ccddd4",
-  sageDeep: "#6d8579",
-  pearl: "#f8f5ef",
-  stone: "#eeebe3",
+  deepest: "#013220",
+  deep: "#004d1b",
+  deepAlt: "#004d1b",
+  teal: "#004d1b",
+  tealLight: "#41eda4",
+  sage: "#dbd7cd",
+  sageDeep: "#414942",
+  pearl: "#efebe3",
+  stone: "#e9f6ef",
   white: "#ffffff",
-  ink: "#0f1a15",
-  muted: "#6d8579",
-  gold: "#c49a5c",
-  goldLight: "#dbb878",
+  ink: "#1b1c1a",
+  muted: "#414942",
+  gold: "#722c00",
+  goldLight: "#fdf3e7",
 } as const;
 
 export type Theme = "dark" | "light" | "pearl";
