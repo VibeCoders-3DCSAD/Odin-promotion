@@ -5,445 +5,393 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Odin is an AI-powered finance app built for how Filipinos actually manage money: variable income, family support, debt, savings, and everyday tradeoffs."
+      content="Budgie forecasts the months that cost more, like Christmas, school enrollment and summer electricity bills, and builds your budget, savings and debt plan before they arrive."
     />
-    <meta
-      property="og:title"
-      content="Odin — Personal Finance Built for Real Life"
-    />
+    <meta property="og:title" content="Budgie — It sees December coming" />
     <meta
       property="og:description"
-      content="Budgeting, debt management, and AI guidance designed for variable income, family obligations, and Filipino money habits."
+      content="A personal finance app for Filipinos that plans for the costly months before they arrive."
     />
-    <meta property="og:image" content="./public/dashboard.png" />
-    <meta name="theme-color" content="#003527" />
-    <title>Odin — Personal Finance Built for Real Life</title>
+    <meta property="og:image" content="./public/budgie-home.png" />
+    <meta name="theme-color" content="#013220" />
+    <title>Budgie — It sees December coming</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Manrope:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/png" href="./public/budgie-mark.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="nav" id="nav">
       <div class="nav__inner">
-        <a href="#" class="nav__logo">ODIN</a>
+        <a href="#top" class="nav__logo" aria-label="Budgie home">
+          <img src="./public/budgie-mark.png" alt="" width="32" height="32" />
+          <span>Budgie</span>
+        </a>
+        <nav class="nav__links" id="navLinks" aria-label="Main">
+          <a href="#year">The year</a>
+          <a href="#plan">The plan</a>
+          <a href="#here">Made for here</a>
+          <a href="#honest">The fine print</a>
+        </nav>
+        <a href="#access" class="btn btn--ink nav__cta">Get early access</a>
         <button
           class="nav__toggle"
           id="navToggle"
-          aria-label="Toggle navigation menu"
+          aria-label="Open menu"
           aria-expanded="false"
+          aria-controls="navLinks"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span></span><span></span>
         </button>
-        <div class="nav__links" id="navLinks" role="menubar">
-          <button class="nav__link" role="menuitem" data-section="features">
-            Why Odin
-          </button>
-          <button class="nav__link" role="menuitem" data-section="capabilities">
-            Product
-          </button>
-          <button class="nav__link" role="menuitem" data-section="cta">
-            Get Started
-          </button>
-          <a href="#" class="nav__cta">Get Early Access</a>
-        </div>
       </div>
-    </nav>
+    </header>
 
-    <section class="hero" id="hero">
-      <div class="hero__inner">
-        <div class="hero__content">
-          <div class="hero__badge">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="6" cy="6" r="3" fill="#064e3b" />
-            </svg>
-            AI-Powered Personal Finance
-          </div>
+    <main id="main">
+      <!-- Hero: the forecast rosette -->
+      <section class="hero" id="top">
+        <div class="hero__copy">
           <h1 class="hero__title">
-            Budgeting that fits<br />
-            <strong>real Filipino life</strong>
+            It sees <em>December</em> coming.
           </h1>
-          <p class="hero__subtitle text-lg">
-            Odin helps you manage money around variable income, padala, debt,
-            savings goals, and day-to-day spending. It gives you clear guidance
-            without pretending your life fits a generic finance template.
+          <p class="hero__lede">
+            Budgie forecasts the months that cost more, like Christmas,
+            enrollment and summer Meralco bills, and builds your budget,
+            savings and debt plan before they arrive.
           </p>
-          <div class="hero__meta" aria-label="Key Odin principles">
-            <div class="hero__meta-item">
-              <span class="hero__meta-label">Built for</span>
-              <span class="hero__meta-value">Variable income</span>
-            </div>
-            <div class="hero__meta-item">
-              <span class="hero__meta-label">Accounts for</span>
-              <span class="hero__meta-value">Padala and obligations</span>
-            </div>
-            <div class="hero__meta-item">
-              <span class="hero__meta-label">Guides</span>
-              <span class="hero__meta-value">Daily money decisions</span>
-            </div>
-          </div>
           <div class="hero__actions">
-            <a href="#" class="btn btn--primary">Get Early Access</a>
-            <a href="#features" class="btn btn--secondary">Why Odin</a>
+            <a href="#access" class="btn btn--ink">Get early access</a>
+            <a href="#year" class="link">See how it reads the year</a>
           </div>
+          <p class="hero__meta mono">
+            Android · In development · University&nbsp;of&nbsp;Makati
+          </p>
         </div>
-        <div class="hero__media">
-          <div class="hero__media-stack">
-            <div class="hero__note animate animate--delay-1">
-              <div class="hero__note-label">The problem</div>
+
+        <figure class="rosette" id="rosette">
+          <span class="rosette__serial mono" aria-hidden="true">BDG 2026 · 12</span>
+          <div class="rosette__dial">
+            <svg
+              class="rosette__svg"
+              id="rosetteSvg"
+              viewBox="-560 -560 1120 1120"
+              role="group"
+              aria-label="A guilloche rosette with twelve lobes, one per month of a sample spending forecast. December’s lobe is the largest. Select a month to read it."
+            ></svg>
+            <div class="rosette__window">
+              <img
+                src="./public/web/budgie-hi.webp"
+                alt="Budgie the mascot, a pixel-art budgie in a salakot and barong, waving"
+                width="160"
+                height="160"
+              />
+            </div>
+          </div>
+        </figure>
+
+        <p class="rosette__readout mono" id="rosetteCaption" aria-live="polite">
+          <span class="rosette__month" id="readMonth">December</span>
+          <span class="rosette__value" id="readValue">+50% vs. a typical month</span>
+          <span class="rosette__why" id="readWhy">Christmas, Noche Buena, gifts and family</span>
+          <span class="rosette__note">Sample forecast, for illustration</span>
+        </p>
+      </section>
+
+      <div class="microprint mono" aria-hidden="true" data-microprint></div>
+
+      <!-- The year -->
+      <section class="year" id="year" aria-labelledby="yearTitle">
+        <div class="wrap">
+          <div class="year__head">
+            <h2 class="h2" id="yearTitle">
+              Most apps show you last month.<br />
+              Budgie looks at next <em>December</em>.
+            </h2>
+            <p class="year__body">
+              Filipino spending isn’t flat. Electricity peaks in the summer,
+              June brings enrollment and uniforms, and the -ber months build to
+              Christmas. Budgie learns that rhythm from years of Philippine
+              household spending data, then sharpens it with your own records,
+              so the expensive months show up on your plan before they show
+              up on your statement.
+            </p>
+          </div>
+
+          <ol class="ledger" id="ledger" aria-label="Sample year: how spending rises and falls by month">
+            <!-- filled by script.js from the same data as the rosette -->
+          </ol>
+          <p class="ledger__read" aria-live="polite">
+            <span class="ledger__month mono" id="ledgerMonth">December</span>
+            <span class="ledger__value mono" id="ledgerValue">+50% vs. a typical month</span>
+            <span class="ledger__why" id="ledgerWhy">Christmas, Noche Buena, gifts and family</span>
+          </p>
+          <p class="fineprint mono">
+            Sample forecast for illustration. Your forecast is built from your
+            own records once there’s enough history.
+          </p>
+        </div>
+      </section>
+
+      <div class="microprint mono" aria-hidden="true" data-microprint></div>
+
+      <!-- The plan -->
+      <section class="plan" id="plan" aria-labelledby="planTitle">
+        <div class="wrap">
+          <div class="plan__head">
+            <h2 class="h2" id="planTitle">
+              One forecast.<br />Three plans that agree with each other.
+            </h2>
+            <div class="plan__intro">
               <p>
-                Most money tools are good at logging transactions, but weak at
-                helping users choose what to protect when life gets messy.
+                The forecast feeds a monthly plan that covers everything your
+                money has to do at once. Essentials and obligations come first,
+                then what’s left is split between your goals and your debts.
+              </p>
+              <p class="plan__decide">
+                Budgie suggests. <strong>You approve, edit, or say no thanks.</strong>
               </p>
             </div>
-            <div class="phone-frame hero__phone-frame">
+          </div>
+
+          <ol class="entries">
+            <li class="entry">
+              <h3 class="entry__name">Budget</h3>
+              <div class="entry__text">
+                <p class="entry__lead">Sized for the season you’re in.</p>
+                <p>
+                  A June budget already makes room for enrollment. Bills follow
+                  your scheduled payments, debts get what your loans require,
+                  and Budgie shows you why.
+                </p>
+              </div>
+              <figure class="crop">
+                <img
+                  src="./public/web/crop-budget.webp"
+                  alt="Budgie’s suggested budget: essentials PHP 24,000, discretionary PHP 9,000, savings PHP 4,000, debt payments PHP 13,000, unallocated PHP 2,000, with a ‘Why these amounts’ note explaining them"
+                  width="700"
+                  height="637"
+                  loading="lazy"
+                />
+              </figure>
+            </li>
+            <li class="entry">
+              <h3 class="entry__name">Savings</h3>
+              <div class="entry__text">
+                <p class="entry__lead">A schedule you can actually keep.</p>
+                <p>
+                  How much to set aside each month for an emergency fund,
+                  tuition or a trip, when you’ll get there at your current
+                  pace, and what it takes to catch up.
+                </p>
+              </div>
+              <figure class="crop">
+                <img
+                  src="./public/web/crop-goal.webp"
+                  alt="Budgie savings goal: at PHP 1,200 a month you’d reach your Japan trip in Sep 2027; you wanted Apr 2027, so catching up takes PHP 2,300 a month"
+                  width="700"
+                  height="460"
+                  loading="lazy"
+                />
+              </figure>
+            </li>
+            <li class="entry">
+              <h3 class="entry__name">Debt</h3>
+              <div class="entry__text">
+                <p class="entry__lead">A payoff with a date on it.</p>
+                <p>
+                  Loans and credit cards tracked to the payment, with what’s
+                  left, what’s next, and how many payments until you’re done.
+                </p>
+              </div>
+              <figure class="crop">
+                <img
+                  src="./public/web/crop-debt.webp"
+                  alt="Budgie motorcycle loan: PHP 38,400 balance left, PHP 57,600 of PHP 96,000 paid off, next payment PHP 3,200 on Sep 15, 12 of 30 payments left"
+                  width="700"
+                  height="747"
+                  loading="lazy"
+                />
+              </figure>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <div class="microprint mono" aria-hidden="true" data-microprint></div>
+
+      <!-- Made for here -->
+      <section class="here" id="here" aria-labelledby="hereTitle">
+        <div class="wrap here__grid">
+          <div class="here__copy">
+            <h2 class="h2" id="hereTitle">
+              Padala, Pag-IBIG and paluwagan aren’t edge cases here.
+            </h2>
+            <p>
+              Budgie’s categories start from how money really moves in a
+              Filipino household: family support and remittances, SSS,
+              PhilHealth and Pag-IBIG contributions, billers like Meralco and
+              Globe, and the cash, bank and e-wallet accounts you split it all
+              across.
+            </p>
+            <dl class="terms">
+              <div><dt>Family support</dt><dd>Planned for, not treated as overspending</dd></div>
+              <div><dt>Government contributions</dt><dd>SSS, PhilHealth and Pag-IBIG in their own category</dd></div>
+              <div><dt>Billers and remittances</dt><dd>Due dates in your plan, before they’re due</dd></div>
+              <div><dt>Unusual spending</dt><dd>Flags a category that’s well outside your normal range</dd></div>
+            </dl>
+          </div>
+          <div class="here__plates">
+            <figure class="plate">
               <img
-                src="./public/dashboard.png"
-                alt="Odin financial dashboard overview"
+                src="./public/web/budgie-scheduled.webp"
+                alt="Budgie scheduled payments: rent, Meralco, Pag-IBIG, SSS contribution and Globe fiber with their amounts and due dates"
+                width="600"
+                height="1301"
                 loading="lazy"
               />
-            </div>
-            <div class="hero__caption animate animate--delay-2">
-              <span class="hero__caption-kicker">Quiet control</span>
-              <span class="hero__caption-text"
-                >A calmer way to see debt, savings, and spending priorities at
-                once.</span
-              >
-            </div>
+            </figure>
+            <figure class="plate plate--offset">
+              <img
+                src="./public/web/budgie-alerts.webp"
+                alt="Budgie alerts list including ‘Transport over budget’ and ‘Food spending is unusual’"
+                width="600"
+                height="1301"
+                loading="lazy"
+              />
+            </figure>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section section--low" id="features">
-      <div class="container section__intro section__intro--split">
-        <div class="section__label animate">Why Odin</div>
-        <div class="section__intro-main">
-          <h2 class="section__title animate animate--delay-1">
-            Built for the way money<br />
-            actually moves here
-          </h2>
-          <p class="section__desc text-lg animate animate--delay-2">
-            Most finance apps stop at tracking. Odin is built for the harder
-            part: helping you make decisions when income shifts, obligations
-            stack up, and every peso needs a job.
+      <!-- Evidence -->
+      <section class="asked" aria-labelledby="askedTitle">
+        <div class="guilloche" aria-hidden="true" data-guilloche></div>
+        <div class="wrap">
+          <h2 class="h2" id="askedTitle">We asked before we built.</h2>
+          <p class="asked__intro">
+            From the Budgie research team’s survey of Filipinos who manage
+            their own money:
+          </p>
+          <div class="lead-figure">
+            <p class="lead-figure__num">89.4%</p>
+            <p class="lead-figure__text">
+              feel existing budgeting apps don’t account for their family
+              obligations, which 97.9% of them have to plan around.
+            </p>
+          </div>
+          <table class="figures">
+            <caption class="sr-only">More survey findings</caption>
+            <tbody>
+              <tr>
+                <th scope="row">97.9%</th>
+                <td>would use their spending data to predict what they’ll need next</td>
+              </tr>
+              <tr>
+                <th scope="row">85.1%</th>
+                <td>find it hard to keep track of their spending consistently</td>
+              </tr>
+              <tr>
+                <th scope="row">72.3%</th>
+                <td>say unexpected expenses are a source of stress</td>
+              </tr>
+              <tr>
+                <th scope="row">66.0%</th>
+                <td>often can’t tell where their money went</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="fineprint mono">
+            Source: Budgie research team survey (thesis, University of
+            Makati). Nationally, 77% of Filipino adults find it somewhat or
+            very difficult to raise money for an emergency (BSP, 2026).
           </p>
         </div>
-        <p class="section__aside animate animate--delay-3">
-          This is not a guilt app. It is a decision system for people juggling
-          irregular cash flow, family expectations, and practical tradeoffs.
+        <div class="guilloche" aria-hidden="true" data-guilloche></div>
+      </section>
+
+      <!-- Honest -->
+      <section class="honest" id="honest" aria-labelledby="honestTitle">
+        <div class="wrap">
+          <h2 class="h2" id="honestTitle">The fine print, in large print.</h2>
+          <ul class="honest__list">
+            <li>
+              <h3 class="h3">Android first</h3>
+              <p>Budgie is being built for Android phones.</p>
+            </li>
+            <li>
+              <h3 class="h3">You enter, it plans</h3>
+              <p>
+                No bank or e-wallet linking. You log transactions yourself,
+                and that’s what keeps your data in your hands.
+              </p>
+            </li>
+            <li>
+              <h3 class="h3">Works offline</h3>
+              <p>Record spending without signal. It syncs when you’re back online.</p>
+            </li>
+            <li>
+              <h3 class="h3">Forecasts need a little history</h3>
+              <p>
+                Forecasts and unusual-spending alerts start once you’ve logged
+                enough to learn from.
+              </p>
+            </li>
+            <li>
+              <h3 class="h3">Advice, not orders</h3>
+              <p>
+                Budgie is decision support, not licensed financial advice. Every
+                plan waits for your approval.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="microprint mono" aria-hidden="true" data-microprint></div>
+
+      <!-- Access -->
+      <section class="access" id="access" aria-labelledby="accessTitle">
+        <div class="access__seal" aria-hidden="true">
+          <svg class="access__rings" id="sealSvg" viewBox="-300 -300 600 600"></svg>
+          <img src="./public/web/budgie-hi.webp" alt="" width="160" height="160" loading="lazy" />
+        </div>
+        <h2 class="h2 access__title" id="accessTitle">
+          Get ready for this <em>December</em>, early.
+        </h2>
+        <p class="access__body">
+          Budgie is in development for Android. Early access isn’t open
+          yet; when it is, this is where you’ll find it.
         </p>
-      </div>
-    </section>
-
-    <section class="section section--low">
-      <div class="container">
-        <div class="features">
-          <div class="feature animate">
-            <div class="feature__content">
-              <div class="feature__number">01</div>
-              <h3 class="feature__title">
-                Budgeting Based on Your Income-Obligation Status
-              </h3>
-              <p class="feature__desc">
-                Odin adapts whether you are stable or variable, obligated or
-                flexible. It builds budgets around your income-obligation
-                status, instead of treating every user like they live the same
-                financial life.
-              </p>
-              <ul class="feature__list">
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  Supports stable obligated, stable flexible, variable
-                  obligated, and variable flexible users
-                </li>
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  Budget recommendations shaped by your income-obligation status
-                </li>
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  A classification engine that builds your financial profile
-                </li>
-              </ul>
-            </div>
-            <div class="feature__media">
-              <div class="phone-frame">
-                <img
-                  src="./public/budget-advice.png"
-                  alt="Odin budget advice screen"
-                  class="feature__image"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="feature feature--reverse animate">
-            <div class="feature__content">
-              <div class="feature__number">02</div>
-              <h3 class="feature__title">
-                Forecasting, Savings, and Debt with Projection
-              </h3>
-              <p class="feature__desc">
-                See future expenses before they hit, track savings and debt in
-                one view, and understand where your obligations are heading next
-                instead of only reviewing the past.
-              </p>
-              <ul class="feature__list">
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  A forecasting engine that surfaces future expenses
-                </li>
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  Savings and debt management with forward projection
-                </li>
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  Visibility into obligations, reserves, and payoff paths
-                </li>
-              </ul>
-            </div>
-            <div class="feature__media">
-              <div class="phone-frame">
-                <img
-                  src="./public/debt-manager.png"
-                  alt="Odin debt manager screen"
-                  class="feature__image"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="feature animate">
-            <div class="feature__content">
-              <div class="feature__number">03</div>
-              <h3 class="feature__title">
-                Guidance, Anomaly Alerts, and Real Listening
-              </h3>
-              <p class="feature__desc">
-                Odin listens to what matters to you, detects unusual spending,
-                and gives guidance with context. From paluwagan and handaan to
-                bills and debt, the alerts are meant to feel useful, not noisy.
-              </p>
-              <ul class="feature__list">
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  Anomaly alerts that listen to your rules and context
-                </li>
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  Guidance shaped by your stated priorities and patterns
-                </li>
-                <li class="feature__list-item">
-                  <span class="feature__list-icon">
-                    <svg viewBox="0 0 10 10">
-                      <path d="M8.5 2L3.5 7 1.5 5" />
-                    </svg>
-                  </span>
-                  A calmer assistant for everyday money decisions
-                </li>
-              </ul>
-            </div>
-            <div class="feature__media">
-              <div class="phone-frame">
-                <img
-                  src="./public/assistant.png"
-                  alt="Odin AI assistant screen"
-                  class="feature__image"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="capabilities">
-      <div class="container section__intro section__intro--split">
-        <div class="section__label animate">Product</div>
-        <div class="section__intro-main">
-          <h2 class="section__title animate animate--delay-1">
-            One place for the money decisions that usually get split apart
-          </h2>
-          <p
-            class="section__desc text-lg animate animate--delay-2"
-            style="margin-bottom: 1rem"
-          >
-            Odin combines budgeting, forecasting, anomaly detection,
-            classification, and long-range savings and debt planning in one
-            workflow instead of scattering them across notes, spreadsheets, and
-            generic finance apps.
-          </p>
-        </div>
-        <p class="section__aside animate animate--delay-3">
-          The point is not more dashboards. The point is one calm surface where
-          the next best money decision is easier to make.
-        </p>
-      </div>
-      <div class="container">
-        <div class="gallery-grid">
-          <div class="gallery-item animate">
-            <div class="phone-frame">
-              <img
-                src="./public/savings-debt.png"
-                alt="Odin savings and debt overview"
-                loading="lazy"
-              />
-            </div>
-            <div class="gallery-item__label">
-              Savings and Debt with Projection
-            </div>
-          </div>
-          <div class="gallery-item animate animate--delay-1">
-            <div class="phone-frame">
-              <img
-                src="./public/history.png"
-                alt="Odin transaction history"
-                loading="lazy"
-              />
-            </div>
-            <div class="gallery-item__label">
-              Forecasting and Transaction Context
-            </div>
-          </div>
-          <div class="gallery-item animate animate--delay-2">
-            <div class="phone-frame">
-              <img
-                src="./public/add-transaction.png"
-                alt="Odin add transaction screen"
-                loading="lazy"
-              />
-            </div>
-            <div class="gallery-item__label">
-              Budgeting Engine and Daily Logging
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--dark section--signal">
-      <div class="container">
-        <div class="stats">
-          <div class="stat animate">
-            <div class="stat__number">Built for</div>
-            <div class="stat__label">
-              Stable obligated, stable flexible, variable obligated, and
-              variable flexible behavior
-            </div>
-          </div>
-          <div class="stat animate animate--delay-1">
-            <div class="stat__number">Engine Stack</div>
-            <div class="stat__label">
-              Budgeting, forecasting, anomaly alerts, classification, and
-              projection
-            </div>
-          </div>
-          <div class="stat animate animate--delay-2">
-            <div class="stat__number">Profile Aware</div>
-            <div class="stat__label">
-              A financial behavior profile that improves guidance over time
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section--low" id="cta">
-      <div class="container container--narrow">
-        <div class="cta-content">
-          <div class="section__label animate">Get Started</div>
-          <h2 class="section__title animate animate--delay-1">
-            Ready for a finance app<br />
-            that actually gets it?
-          </h2>
-          <p
-            class="text-lg animate animate--delay-2"
-            style="margin-bottom: 2.5rem"
-          >
-            Start building a clearer system for budgeting, debt, savings, and
-            the real-world spending decisions most apps ignore.
-          </p>
-          <div class="cta-actions animate animate--delay-3">
-            <a href="#" class="btn btn--primary">Get Early Access</a>
-            <span class="cta-footnote"
-              >No noisy gamification. No fake urgency. Just a better
-              system.</span
-            >
-          </div>
-        </div>
-      </div>
-    </section>
+        <button type="button" class="btn btn--ink btn--lg" aria-disabled="true" aria-describedby="accessNote">
+          Get early access
+        </button>
+        <p class="access__note mono" id="accessNote">Not open yet. Check back here.</p>
+      </section>
+    </main>
 
     <footer class="footer">
-      <div class="footer__inner">
+      <div class="wrap footer__grid">
         <div class="footer__brand">
-          <div class="footer__logo">ODIN</div>
-          <p class="footer__desc">
-            AI-powered personal finance with budgeting, forecasting, anomaly
-            alerts, projections, and a behavior-aware financial profile.
+          <img src="./public/budgie-logo.png" alt="Budgie" width="72" height="72" loading="lazy" />
+          <p>
+            Budgie is a thesis project of the College of Computing and
+            Information Sciences, University of Makati, AY 2026–2027.
           </p>
         </div>
-        <div class="footer__links">
-          <div class="footer__col">
-            <h4>Product</h4>
-            <a href="#features">Why Odin</a>
-            <a href="#capabilities">Product</a>
-            <a href="#">Pricing</a>
-          </div>
-          <div class="footer__col">
-            <h4>Company</h4>
-            <a href="#">About</a>
-            <a href="#">Blog</a>
-            <a href="#">Contact</a>
-          </div>
-        </div>
+        <p class="footer__team">
+          Stefanie S. Gabion · Joaquin Luis T. Guevarra · Alexa Joanne Paula
+          G. San Jose · Charles Nathaniel B. Togle
+        </p>
+        <p class="footer__legal mono">
+          © 2026 Budgie · Not financial, investment, tax or legal advice.
+        </p>
       </div>
-      <div class="footer__bottom">
-        <span>&copy; 2026 Odin. All rights reserved.</span>
-        <span>Built with purpose.</span>
-      </div>
+      <div class="microprint mono" aria-hidden="true" data-microprint></div>
     </footer>
 
     <script src="script.js"></script>
