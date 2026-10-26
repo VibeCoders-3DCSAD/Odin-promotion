@@ -1,0 +1,485 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T15:10:44+00:00",
+  "title": "Design System: Budgie",
+  "extensions": {
+    "colorMeta": {
+      "security-paper": {
+        "role": "neutral",
+        "displayName": "Security Paper",
+        "canonical": "#ebe7de",
+        "tonalRamp": [
+          "#0c0b08",
+          "#272521",
+          "#44423c",
+          "#64615a",
+          "#85827a",
+          "#a8a59e",
+          "#cbc9c3",
+          "#f0eeea"
+        ]
+      },
+      "paper-deep": {
+        "role": "neutral",
+        "displayName": "Paper Deep",
+        "canonical": "#e1dcd0",
+        "tonalRamp": [
+          "#0d0b07",
+          "#27251f",
+          "#45423a",
+          "#656157",
+          "#868278",
+          "#a8a59c",
+          "#ccc9c1",
+          "#f1eee8"
+        ]
+      },
+      "paper-highlight": {
+        "role": "neutral",
+        "displayName": "Paper Highlight",
+        "canonical": "#f5f2eb",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#44423d",
+          "#63615b",
+          "#85827c",
+          "#a7a5a0",
+          "#cbc9c5",
+          "#f0eeeb"
+        ]
+      },
+      "intaglio-green": {
+        "role": "primary",
+        "displayName": "Intaglio Green",
+        "canonical": "#013220",
+        "tonalRamp": [
+          "#010f08",
+          "#122b1f",
+          "#294a3b",
+          "#436b58",
+          "#648d78",
+          "#8baf9c",
+          "#b4d1c2",
+          "#def5e9"
+        ]
+      },
+      "intaglio-green-soft": {
+        "role": "primary",
+        "displayName": "Soft Intaglio Green",
+        "canonical": "#0c4a30",
+        "tonalRamp": [
+          "#001006",
+          "#0b2c1d",
+          "#224c37",
+          "#3a6e53",
+          "#5c9074",
+          "#85b198",
+          "#afd3bf",
+          "#daf7e6"
+        ]
+      },
+      "body-ink": {
+        "role": "neutral",
+        "displayName": "Body Ink",
+        "canonical": "#17261d",
+        "tonalRamp": [
+          "#070d09",
+          "#1e2822",
+          "#39463e",
+          "#56665c",
+          "#77877d",
+          "#9ba9a0",
+          "#c1cdc5",
+          "#e8f1eb"
+        ]
+      },
+      "body-ink-muted": {
+        "role": "neutral",
+        "displayName": "Body Ink Muted",
+        "canonical": "#36453b",
+        "tonalRamp": [
+          "#070d09",
+          "#1f2822",
+          "#3a453d",
+          "#57655c",
+          "#77877c",
+          "#9ca9a0",
+          "#c1ccc5",
+          "#e8f1eb"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(1, 50, 32, 0.2)",
+        "tonalRamp": [
+          "#010f08",
+          "#122b1f",
+          "#294a3b",
+          "#436b58",
+          "#648d78",
+          "#8baf9c",
+          "#b4d1c2",
+          "#def5e9"
+        ],
+        "note": "Intaglio green at alpha; ramp shown for the base ink."
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "canonical": "rgba(1, 50, 32, 0.42)",
+        "tonalRamp": [
+          "#010f08",
+          "#122b1f",
+          "#294a3b",
+          "#436b58",
+          "#648d78",
+          "#8baf9c",
+          "#b4d1c2",
+          "#def5e9"
+        ],
+        "note": "Intaglio green at alpha; ramp shown for the base ink."
+      },
+      "logo-leaf": {
+        "role": "tertiary",
+        "displayName": "Logo Leaf",
+        "canonical": "#2f9e44",
+        "tonalRamp": [
+          "#001200",
+          "#003100",
+          "#00520e",
+          "#007624",
+          "#379947",
+          "#6cba74",
+          "#9ddca1",
+          "#ccfecf"
+        ]
+      },
+      "logo-sun": {
+        "role": "tertiary",
+        "displayName": "Logo Sun",
+        "canonical": "#e8b400",
+        "tonalRamp": [
+          "#190600",
+          "#3a1e00",
+          "#5e3a00",
+          "#855800",
+          "#a87a00",
+          "#c79f37",
+          "#e6c578",
+          "#ffecb1"
+        ]
+      },
+      "ember": {
+        "role": "secondary",
+        "displayName": "Ember",
+        "canonical": "#e8650f",
+        "tonalRamp": [
+          "#250000",
+          "#4e0200",
+          "#7a1b00",
+          "#a93400",
+          "#d05908",
+          "#ed8653",
+          "#ffb188",
+          "#ffddbd"
+        ]
+      },
+      "ember-ink": {
+        "role": "secondary",
+        "displayName": "Ember Ink",
+        "canonical": "#9a3d08",
+        "tonalRamp": [
+          "#210000",
+          "#470e00",
+          "#712700",
+          "#9d4111",
+          "#c36339",
+          "#e18d69",
+          "#fdb698",
+          "#ffe0c8"
+        ]
+      },
+      "note-paper": {
+        "role": "neutral",
+        "displayName": "Note Paper",
+        "canonical": "#efebe3",
+        "tonalRamp": [
+          "#0c0b09",
+          "#272521",
+          "#44423d",
+          "#64615a",
+          "#85827b",
+          "#a8a59f",
+          "#cbc9c4",
+          "#f0eeea"
+        ]
+      },
+      "note-mint": {
+        "role": "neutral",
+        "displayName": "Note Mint",
+        "canonical": "#b9dcc4",
+        "tonalRamp": [
+          "#040e07",
+          "#182a1e",
+          "#314839",
+          "#4c6956",
+          "#6d8b77",
+          "#93ad9b",
+          "#bad0c0",
+          "#e2f4e8"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero line only; italic for the costly month in ember ink."
+      },
+      "figure": {
+        "displayName": "Figure",
+        "purpose": "The single lead survey figure on the green note."
+      },
+      "headline-entry": {
+        "displayName": "Headline Entry",
+        "purpose": "One-word plan entry names."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "List item heads and entry leads."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Hero subline."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Mono uppercase month names, readouts, serials, meta line."
+      },
+      "microprint": {
+        "displayName": "Microprint",
+        "purpose": "Decorative seam text only, aria-hidden."
+      }
+    },
+    "shadows": [
+      {
+        "name": "engraved-double-frame",
+        "value": "inset 0 0 0 1px rgba(1,50,32,0.42), 0 0 0 6px #ebe7de, 0 0 0 7px rgba(1,50,32,0.2)",
+        "purpose": "Plates and the watermark window: inner rule, paper gap, outer rule."
+      },
+      {
+        "name": "plate-falloff",
+        "value": "0 28px 50px -24px rgba(1,50,32,0.28)",
+        "purpose": "Appended to the double frame on plates only."
+      },
+      {
+        "name": "button-rest",
+        "value": "inset 0 0 0 1px rgba(255,255,255,0.06), 0 1px 0 rgba(1,50,32,0.2)",
+        "purpose": "Printed edge on the green pill."
+      },
+      {
+        "name": "button-hover",
+        "value": "inset 0 0 0 1px rgba(255,255,255,0.08), 0 10px 24px -10px rgba(1,50,32,0.55)",
+        "purpose": "Green pill hover, with a 1px rise."
+      },
+      {
+        "name": "overlay-menu",
+        "value": "0 20px 30px -24px rgba(1,50,32,0.4)",
+        "purpose": "Mobile dropdown menu panel."
+      },
+      {
+        "name": "ledger-double-line",
+        "value": "0 3px 0 -2px rgba(1,50,32,0.2)",
+        "purpose": "Second, finer rule under each plan entry. A rule, not a shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The single easing curve for every transition and the engraving."
+      },
+      {
+        "name": "engrave",
+        "value": "stroke-dashoffset 1 to 0, 1.9s ease-out, 45ms stagger per ring",
+        "purpose": "Guilloche draw-in, once on load; skipped under reduced motion."
+      },
+      {
+        "name": "button",
+        "value": "240ms",
+        "purpose": "Pill background, shadow and 1px lift."
+      },
+      {
+        "name": "underline-draw",
+        "value": "300ms",
+        "purpose": "Nav link underline drawing in from the left."
+      },
+      {
+        "name": "month-bar",
+        "value": "250ms",
+        "purpose": "Ledger bar widening 58% to 72%."
+      },
+      {
+        "name": "menu",
+        "value": "220ms",
+        "purpose": "Mobile menu fade and 6px drop."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "lg",
+        "value": "1080px"
+      },
+      {
+        "name": "md",
+        "value": "900px"
+      },
+      {
+        "name": "sm",
+        "value": "640px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Green-ink pill for the one action on a surface.",
+      "html": "<a class=\"ds-btn ds-btn-ink\" href=\"#\">Get early access</a>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 1.75rem;border-radius:999px;border:0;font:700 1rem/1 Manrope,system-ui,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color 240ms var(--ease-out),box-shadow 240ms var(--ease-out),transform 240ms var(--ease-out);} .ds-btn:focus-visible{outline:2px solid var(--ember-ink);outline-offset:3px;} .ds-btn-ink{background:var(--ink);color:var(--paper-hi);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),0 1px 0 rgba(1,50,32,.2);} .ds-btn-ink:hover{background:var(--ink-soft);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 10px 24px -10px rgba(1,50,32,.55);transform:translateY(-1px);} .ds-btn-ink:active{transform:translateY(0);}"
+    },
+    {
+      "name": "Unavailable Button",
+      "kind": "button",
+      "refersTo": "button-unavailable",
+      "description": "An action that exists but is not open yet, with a mono note.",
+      "html": "<div class=\"ds-wrap\"><button class=\"ds-btn ds-btn-off\" aria-disabled=\"true\">Get early access</button><p class=\"ds-note\">NOT OPEN YET. CHECK BACK HERE.</p></div>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 1.75rem;border-radius:999px;border:0;font:700 1rem/1 Manrope,system-ui,sans-serif;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color 240ms var(--ease-out),box-shadow 240ms var(--ease-out),transform 240ms var(--ease-out);} .ds-btn:focus-visible{outline:2px solid var(--ember-ink);outline-offset:3px;} .ds-wrap{display:grid;justify-items:center;} .ds-btn-off{min-height:60px;padding:0 2.25rem;font-size:1.0625rem;background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);cursor:not-allowed;} .ds-note{margin:1rem 0 0;font:500 .75rem 'Red Hat Mono',ui-monospace,monospace;letter-spacing:.14em;color:var(--text-2);}"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "link-text",
+      "description": "Secondary action beside the pill.",
+      "html": "<a class=\"ds-link\" href=\"#\">See how it reads the year</a>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-link{font:600 1.0625rem Manrope,system-ui,sans-serif;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:var(--rule-strong);transition:text-decoration-color 200ms;} .ds-link:hover{text-decoration-color:var(--ink);} .ds-link:focus-visible{outline:2px solid var(--ember-ink);outline-offset:3px;border-radius:4px;}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-bar",
+      "description": "Sticky paper bar with a single hairline and draw-in underlines.",
+      "html": "<header class=\"ds-nav\"><span class=\"ds-logo\">Budgie</span><nav class=\"ds-links\"><a href=\"#\">The year</a><a href=\"#\">The plan</a><a href=\"#\">The fine print</a></nav></header>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-nav{display:flex;align-items:center;gap:2.5rem;height:72px;padding:0 1.5rem;background:var(--paper) url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='14'%3E%3Cpath d='M0 7 C20 2 40 2 60 7 S100 12 120 7 S160 2 180 7 S220 12 240 7' fill='none' stroke='%23013220' stroke-opacity='.07' stroke-width='.8'/%3E%3C/svg%3E\");border-bottom:1px solid var(--rule);font-family:Manrope,system-ui,sans-serif;} .ds-logo{font-weight:700;font-size:1.3rem;letter-spacing:-.01em;color:var(--ink);} .ds-links{display:flex;gap:2rem;margin-left:auto;} .ds-links a{font-size:.95rem;font-weight:500;color:var(--text);text-decoration:none;padding-block:.4rem;background:linear-gradient(var(--ink),var(--ink)) 0 100%/0 1px no-repeat;transition:background-size 300ms var(--ease-out);} .ds-links a:hover,.ds-links a:focus-visible{background-size:100% 1px;outline:none;}"
+    },
+    {
+      "name": "Engraved Plate",
+      "kind": "card",
+      "refersTo": "plate",
+      "description": "Screenshot set in the engraved double frame.",
+      "html": "<figure class=\"ds-plate\"><div class=\"ds-screen\"></div></figure>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-plate{margin:0;width:220px;padding:8px;border-radius:22px;background:var(--paper-hi);box-shadow:inset 0 0 0 1px var(--rule-strong),0 0 0 6px var(--paper),0 0 0 7px var(--rule),0 28px 50px -24px rgba(1,50,32,.28);} .ds-screen{height:180px;border-radius:15px;background:var(--paper-deep);}"
+    },
+    {
+      "name": "Forecast Readout",
+      "kind": "custom",
+      "refersTo": "readout",
+      "description": "Mono reading of the selected month over an ember rule.",
+      "html": "<p class=\"ds-read\"><span class=\"ds-m\">DECEMBER</span><span class=\"ds-v\">+50% VS. A TYPICAL MONTH</span><span class=\"ds-w\">Christmas, Noche Buena, gifts and family</span><span class=\"ds-n\">SAMPLE FORECAST, FOR ILLUSTRATION</span></p>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-read{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.25rem 1.25rem;align-items:baseline;max-width:30rem;margin:0;padding-top:.9rem;border-top:1px solid var(--ember);font:500 .72rem 'Red Hat Mono',ui-monospace,monospace;letter-spacing:.1em;color:var(--text-2);background:var(--paper);} .ds-m{font-size:.85rem;font-weight:600;color:var(--ember-ink);} .ds-v{font-weight:600;color:var(--ink);} .ds-w,.ds-n{grid-column:1/-1;} .ds-w{font:400 .875rem Manrope,system-ui,sans-serif;letter-spacing:.02em;color:var(--text);} .ds-n{margin-top:.3rem;}"
+    },
+    {
+      "name": "Ledger Month",
+      "kind": "custom",
+      "refersTo": "readout",
+      "description": "Hatched month bar toggle; ember for costly months.",
+      "html": "<div class=\"ds-ledger\"><button class=\"ds-month\" aria-pressed=\"false\" style=\"--h:40%\"><span class=\"ds-bar\"></span><span class=\"ds-name\">JUL</span></button><button class=\"ds-month ds-hot\" aria-pressed=\"true\" style=\"--h:100%\"><span class=\"ds-bar\"></span><span class=\"ds-name\">DEC</span></button></div>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-ledger{display:grid;grid-template-columns:repeat(2,90px);border-block:1px solid var(--rule-strong);background:var(--paper);} .ds-month{appearance:none;border:0;background:transparent;height:200px;display:grid;grid-template-rows:1fr auto;padding:0;cursor:pointer;} .ds-month+.ds-month{border-left:1px solid var(--rule);} .ds-bar{align-self:end;justify-self:center;width:58%;height:var(--h);border:1px solid var(--ink);border-bottom:0;background:repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 4px);opacity:.55;transition:opacity 250ms var(--ease-out),width 250ms var(--ease-out);} .ds-hot .ds-bar{border-color:var(--ember);background:repeating-linear-gradient(90deg,var(--ember) 0 1px,transparent 1px 4px);opacity:.85;} .ds-month:hover .ds-bar,.ds-month[aria-pressed=true] .ds-bar{opacity:1;width:72%;} .ds-name{padding:.9rem 0 .8rem;border-top:1px solid var(--rule-strong);font:500 .75rem 'Red Hat Mono',ui-monospace,monospace;letter-spacing:.16em;color:var(--text-2);} .ds-month[aria-pressed=true] .ds-name{color:var(--ember-ink);font-weight:600;box-shadow:inset 0 2px 0 var(--ember);} .ds-month:focus-visible{outline:2px solid var(--ember-ink);outline-offset:-3px;}"
+    },
+    {
+      "name": "Green Note Figure",
+      "kind": "custom",
+      "refersTo": "green-note",
+      "description": "Evidence on the green note: Bodoni lead figure and mono table row.",
+      "html": "<section class=\"ds-note\"><p class=\"ds-num\">89.4%</p><p class=\"ds-txt\">feel existing budgeting apps don’t account for their family obligations.</p><table class=\"ds-fig\"><tr><th>72.3%</th><td>say unexpected expenses are a source of stress</td></tr></table></section>",
+      "css": ":host{--paper:#ebe7de;--paper-deep:#e1dcd0;--paper-hi:#f5f2eb;--ink:#013220;--ink-soft:#0c4a30;--text:#17261d;--text-2:#36453b;--rule:rgba(1,50,32,.2);--rule-strong:rgba(1,50,32,.42);--leaf:#2f9e44;--sun:#e8b400;--ember:#e8650f;--ember-ink:#9a3d08;--on-ink:#efebe3;--on-ink-2:#b9dcc4;--ease-out:cubic-bezier(0.16,1,0.3,1);} .ds-note{padding:2rem;background:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='14'%3E%3Cpath d='M0 7 C20 2 40 2 60 7 S100 12 120 7 S160 2 180 7 S220 12 240 7' fill='none' stroke='%232f9e44' stroke-opacity='.16' stroke-width='.8'/%3E%3C/svg%3E\"),var(--ink);color:var(--on-ink);} .ds-num{margin:0;font:400 4rem/.9 'Bodoni Moda',Didot,Georgia,serif;letter-spacing:-.03em;font-variant-numeric:lining-nums;} .ds-txt{margin:.75rem 0 1.5rem;font:400 1.4rem/1.32 'Bodoni Moda',Didot,Georgia,serif;max-width:30ch;} .ds-fig{width:100%;border-collapse:collapse;border-top:1px solid rgba(239,235,227,.35);} .ds-fig tr{border-bottom:1px solid rgba(239,235,227,.18);} .ds-fig th{width:1%;white-space:nowrap;padding:1rem 1.5rem 1rem 0;font:600 1.0625rem/1.4 'Red Hat Mono',ui-monospace,monospace;text-align:right;font-variant-numeric:tabular-nums;} .ds-fig td{font:400 1.0625rem/1.4 Manrope,system-ui,sans-serif;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Security Print",
+    "overview": "Budgie is engraved like something that holds value. The page is a sheet of warm grey security paper carrying a faint wave-line underprint, and everything of consequence is printed on it in one deep green intaglio ink: the Bodoni display lines, the hairline rules, the guilloche rosette that draws the year's spending forecast. The logo's green, yellow and orange never fill a surface; they appear only as engraved hairlines threaded through the green line work, the way a banknote hides its colour in its lines.\n\nDensity is calm and ledger-like. Sections alternate between plain paper and the deeper paper tone, separated by microprint seams built from the sample forecast figures. Screens are set as engraved plates in a double frame. One section inverts to a green note, framed top and bottom by guilloche bands, and that is where the evidence lives. Motion is a single grammar: the engraving stroke-draw, done once on load.\n\nThe world rejects fintech gloss: no colour gradients on surfaces, no glass, no stat band of oversized numbers on tinted cards. Value is carried by line, not by fill.",
+    "keyCharacteristics": [
+      "Warm grey security paper with a wave-line underprint on every paper surface.",
+      "One ink: deep intaglio green for display type, rules, line work and the primary button.",
+      "Logo colours as hairlines only; ember orange reserved for costly months and the live reading.",
+      "Bodoni Moda display over Manrope body, with Red Hat Mono for serials, readouts and microprint.",
+      "Guilloche rosette, guilloche seal and guilloche bands as the signature line work.",
+      "Hairline rules, double-framed plates and microprint seams instead of cards and shadows."
+    ],
+    "rules": [
+      {
+        "name": "The One Ink Rule",
+        "body": "Everything printed is intaglio green. A new element that needs emphasis gets weight, size or a rule in green ink, not a new hue.",
+        "section": "colors"
+      },
+      {
+        "name": "The Hairline Colour Rule",
+        "body": "Leaf, sun and ember appear as 1px to 1.35px strokes, hatching or rules. They never fill a surface, a button, a badge or a block of text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Costly Month Rule",
+        "body": "Ember marks a month that costs more, the month currently being read, and keyboard focus. Nothing else on the page is orange.",
+        "section": "colors"
+      },
+      {
+        "name": "The Didone Weight Rule",
+        "body": "Bodoni sets at 400 only, with tight negative tracking. Emphasis comes from italic, never from bolding the display face.",
+        "section": "typography"
+      },
+      {
+        "name": "The Serial Rule",
+        "body": "Figures that behave like data (month values, percentages in the figures table, serials) set in Red Hat Mono with tabular numerals. The one lead figure is the exception and sets in Bodoni lining numerals.",
+        "section": "typography"
+      },
+      {
+        "name": "The Microprint Rule",
+        "body": "9px type is ornament. It repeats real or sample figures and is hidden from assistive tech; anything a reader needs sets at 0.72rem or larger.",
+        "section": "typography"
+      },
+      {
+        "name": "The Printed Depth Rule",
+        "body": "New containers get rules and the double frame, not raised cards. A drop shadow belongs only to a plate, the primary button's hover, or an overlay.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** lay every paper surface with the wave underprint, on security paper or paper deep.",
+      "**Do** print display type, rules and line work in intaglio green and nothing else.",
+      "**Do** keep leaf, sun and ember as 1px to 1.35px hairlines, hatching or rules.",
+      "**Do** reserve ember for costly months, the month being read and the focus outline.",
+      "**Do** set screenshots as plates in the engraved double frame (1px rule, 6px paper, 1px rule).",
+      "**Do** generate guilloche from data with non-scaling 1px strokes, and draw it in once with the engraving stroke on the `cubic-bezier(0.16, 1, 0.3, 1)` ease-out.",
+      "**Do** label any sample figure as a sample beside the figure.",
+      "**Do** keep small ember-ink text on security paper or paper highlight, where it clears 4.5:1."
+    ],
+    "donts": [
+      "**Don't** fill a surface, button or badge with leaf, sun or ember. The one wash is an 8% ember tint on a focused rosette wedge.",
+      "**Don't** set text in ember or sun, or in logo leaf on paper; they fail contrast as text colours.",
+      "**Don't** bold Bodoni or set it above weight 400.",
+      "**Don't** put information in microprint; 9px is ornament only.",
+      "**Don't** build raised cards, glass panels or colour gradients; depth is printed. Gradients exist only as line patterns (graticule, hatching, nav underline) and the paper-to-paper vignette in the watermark window.",
+      "**Don't** use hard offset shadows; the only offset line is the ledger's double rule."
+    ]
+  }
+}
