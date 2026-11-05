@@ -4,26 +4,15 @@
   var SVG = 'http://www.w3.org/2000/svg';
   var TAU = Math.PI * 2;
 
-  /* Sample forecast: spending index per month (1.00 = a typical month).
-     Illustrative only; the real forecast comes from the user's records. */
-  var YEAR = [
-    { m: 'January', s: 'JAN', v: 1.05, why: 'After-holiday bills and back-to-work costs' },
-    { m: 'February', s: 'FEB', v: 0.9, why: 'Usually one of the quieter months' },
-    { m: 'March', s: 'MAR', v: 0.94, why: 'Summer starts and electricity use climbs' },
-    { m: 'April', s: 'APR', v: 1.04, why: 'Summer heat, higher Meralco bills, Holy Week trips' },
-    { m: 'May', s: 'MAY', v: 1.12, why: 'Peak electricity use and fiesta season', hot: true },
-    { m: 'June', s: 'JUN', v: 1.22, why: 'School enrollment, uniforms and supplies', hot: true },
-    { m: 'July', s: 'JUL', v: 1.0, why: 'Spending settles after enrollment' },
-    { m: 'August', s: 'AUG', v: 0.96, why: 'Rainy season, steadier spending' },
-    { m: 'September', s: 'SEP', v: 0.98, why: 'The -ber months begin' },
-    { m: 'October', s: 'OCT', v: 1.0, why: 'Early Christmas shopping starts' },
-    { m: 'November', s: 'NOV', v: 1.1, why: 'Undas, then the Christmas run-up' },
-    { m: 'December', s: 'DEC', v: 1.5, why: 'Christmas, Noche Buena, gifts and family', hot: true }
-  ];
+  /* Generated from the 12 trained national HFCE models in odin-ml. */
+  var forecast = window.BUDGIE_FORECAST;
+  var YEAR = forecast.months;
 
   var pct = function (v) {
     var d = Math.round((v - 1) * 100);
-    return d === 0 ? 'About a typical month' : (d > 0 ? '+' : '−') + Math.abs(d) + '% vs. a typical month';
+    return 'Expected spending: ' +
+      (d === 0 ? 'about the yearly average' : Math.abs(d) + '% ' +
+        (d > 0 ? 'above' : 'below') + ' yearly average');
   };
 
   /* Month i peaks at clock position i + 1, so December sits at 12 o'clock. */
@@ -180,7 +169,7 @@
   function buildLedger() {
     var ledger = document.getElementById('ledger');
     if (!ledger) return;
-    var max = 1.5;
+    var max = Math.max.apply(null, YEAR.map(function (mo) { return mo.v; }));
     YEAR.forEach(function (mo, i) {
       var li = document.createElement('li');
       var b = document.createElement('button');
@@ -188,8 +177,8 @@
       b.className = 'month' + (mo.hot ? ' month--hot' : '');
       b.setAttribute('aria-pressed', i === selected ? 'true' : 'false');
       b.setAttribute('aria-label', mo.m + ': ' + pct(mo.v) + '. ' + mo.why);
-      b.style.setProperty('--h', Math.round(((mo.v - 0.7) / (max - 0.7)) * 100) + '%');
-      b.innerHTML = '<span class="month__bar" aria-hidden="true"></span><span class="month__name" aria-hidden="true">' + mo.s + '</span>';
+      b.style.setProperty('--h', ((mo.v / max) * 100).toFixed(2) + '%');
+      b.innerHTML = '<span class="month__bar" aria-hidden="true"></span><span class="month__name" aria-hidden="true">' + mo.s + '</span><span class="month__index" aria-hidden="true">' + mo.index.toFixed(1) + '</span>';
       b.addEventListener('click', function () {
         select(i);
       });
@@ -204,7 +193,7 @@
     var line = YEAR.map(function (mo) {
       return mo.s + ' ' + mo.v.toFixed(2);
     }).join(' · ');
-    var text = ('BUDGIE SAMPLE FORECAST · ' + line + ' · ').repeat(8);
+    var text = ('BUDGIE NATIONAL ML TREND ' + forecast.year + ' · ' + line + ' · ').repeat(8);
     document.querySelectorAll('[data-microprint]').forEach(function (n) {
       n.textContent = text;
     });
@@ -264,8 +253,45 @@
     });
   }
 
+  var modelDialog = document.getElementById('modelDataDialog');
+  var modelTrigger = document.getElementById('openModelData');
+  if (modelDialog && modelTrigger) {
+    var vintage = new Date(forecast.psaDataVintage + 'T00:00:00Z').toLocaleDateString('en-GB', {
+      day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC'
+    });
+    document.getElementById('modelDataSource').textContent =
+      'These charts show projections for ' + forecast.year + ', using PSA data available as of ' + vintage +
+      '. Model version: ' + forecast.modelVersion + '.';
+    document.getElementById('modelDataYear').textContent = forecast.year + ', month by month';
+    var modelRows = document.getElementById('modelDataMonths');
+    YEAR.forEach(function (month) {
+      var row = document.createElement('tr');
+      var difference = Math.round((month.v - 1) * 100);
+      var comparison = difference === 0 ? 'About average' :
+        'About ' + Math.abs(difference) + '% ' + (difference > 0 ? 'above' : 'below') + ' average';
+      [month.m, month.index.toFixed(1), comparison].forEach(function (value, i) {
+        var cell = document.createElement(i === 0 ? 'th' : 'td');
+        if (i === 0) cell.setAttribute('scope', 'row');
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+      modelRows.appendChild(row);
+    });
+    modelTrigger.addEventListener('click', function () { modelDialog.showModal(); });
+    modelDialog.addEventListener('click', function (event) {
+      if (event.target !== modelDialog) return;
+      var bounds = modelDialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right ||
+          event.clientY < bounds.top || event.clientY > bounds.bottom) modelDialog.close();
+    });
+    modelDialog.addEventListener('close', function () { modelTrigger.focus(); });
+  }
+
   buildRosette();
   buildLedger();
+  // Populate both readouts from the same model snapshot on initial load.
+  selected = -1;
+  select(11);
   buildMicroprint();
   buildSeal();
   buildGuilloche();

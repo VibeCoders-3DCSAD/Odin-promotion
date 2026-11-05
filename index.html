@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Manrope:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=Manrope:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/png" href="./public/budgie-mark.png" />
@@ -74,14 +74,14 @@
         </div>
 
         <figure class="rosette" id="rosette">
-          <span class="rosette__serial mono" aria-hidden="true">BDG 2026 · 12</span>
+          <span class="rosette__serial mono" id="readValue" aria-live="polite">Expected spending: 15% above yearly average</span>
           <div class="rosette__dial">
             <svg
               class="rosette__svg"
               id="rosetteSvg"
               viewBox="-560 -560 1120 1120"
               role="group"
-              aria-label="A guilloche rosette with twelve lobes, one per month of a sample spending forecast. December’s lobe is the largest. Select a month to read it."
+              aria-label="2027 national household spending trend from 12 HFCE models. Monthly indices are derived from quarterly projections. Select a month to read its index."
             ></svg>
             <div class="rosette__window">
               <img
@@ -96,9 +96,8 @@
 
         <p class="rosette__readout mono" id="rosetteCaption" aria-live="polite">
           <span class="rosette__month" id="readMonth">December</span>
-          <span class="rosette__value" id="readValue">+50% vs. a typical month</span>
-          <span class="rosette__why" id="readWhy">Christmas, Noche Buena, gifts and family</span>
-          <span class="rosette__note">Sample forecast, for illustration</span>
+          <span class="rosette__why" id="readWhy">Category indices: Food 121; Other goods &amp; services 122.</span>
+          <span class="rosette__note">Based on actual data from the PSA Household Final Consumption Expenditure</span>
         </p>
       </section>
 
@@ -113,26 +112,29 @@
               Budgie looks at next <em>December</em>.
             </h2>
             <p class="year__body">
-              Filipino spending isn’t flat. Electricity peaks in the summer,
-              June brings enrollment and uniforms, and the -ber months build to
-              Christmas. Budgie learns that rhythm from years of Philippine
-              household spending data, then sharpens it with your own records,
-              so the expensive months show up on your plan before they show
-              up on your statement.
+              These are projections from Budgie’s 12 trained Philippine household
+              spending models for 2027. The dial and bars show the same national
+              trend: 100 is the year’s average. Monthly values spread each
+              quarter’s projected growth evenly across its three months.
+              Your personal forecast combines national category trends with
+              your own spending history.
             </p>
           </div>
 
-          <ol class="ledger" id="ledger" aria-label="Sample year: how spending rises and falls by month">
+          <ol class="ledger" id="ledger" aria-label="2027 national household spending trend; index, annual average equals 100">
             <!-- filled by script.js from the same data as the rosette -->
           </ol>
           <p class="ledger__read" aria-live="polite">
             <span class="ledger__month mono" id="ledgerMonth">December</span>
-            <span class="ledger__value mono" id="ledgerValue">+50% vs. a typical month</span>
-            <span class="ledger__why" id="ledgerWhy">Christmas, Noche Buena, gifts and family</span>
+            <span class="ledger__value mono" id="ledgerValue">Expected spending: 15% above yearly average</span>
+            <span class="ledger__why" id="ledgerWhy">Category indices: Food 121; Other goods &amp; services 122.</span>
           </p>
           <p class="fineprint mono">
-            Sample forecast for illustration. Your forecast is built from your
-            own records once there’s enough history.
+            Based on actual data from the PSA Household Final Consumption Expenditure.<br />
+            Model: hfce-sarima-v4 · PSA data vintage: 7 August 2026.<br />
+            National projections, with monthly values derived from quarterly growth.
+            These are spending indices, not personal peso amounts.
+            <button class="model-data-link" id="openModelData" type="button" aria-haspopup="dialog">View model data</button>.
           </p>
         </div>
       </section>
@@ -394,6 +396,37 @@
       <div class="microprint mono" aria-hidden="true" data-microprint></div>
     </footer>
 
+    <dialog class="model-dialog" id="modelDataDialog" aria-labelledby="modelDataTitle">
+      <div class="model-dialog__head">
+        <h2 class="h2" id="modelDataTitle">Where the numbers come from</h2>
+        <form method="dialog"><button class="model-dialog__close" aria-label="Close model data" autofocus>Close</button></form>
+      </div>
+      <p>Budgie uses actual data from the Philippine Statistics Authority’s
+        Household Final Consumption Expenditure, which measures household spending
+        across the Philippines. The models project spending in 12 categories,
+        including food, housing, transport and education.</p>
+      <p id="modelDataSource"></p>
+      <h3>How to read the charts</h3>
+      <p>An index of <strong>100</strong> means average spending for the projected year.
+        An index of <strong>115</strong> means spending is about 15% above that average;
+        <strong>95</strong> means about 5% below it. These are national trends,
+        rather than the amount you personally will spend.</p>
+      <p>The models forecast by quarter. To draw a monthly chart, we spread each
+        quarter’s projected growth evenly over its three months. The monthly
+        points are estimates derived from those quarterly forecasts.</p>
+      <h3 id="modelDataYear">The year, month by month</h3>
+      <div class="model-dialog__table">
+        <table>
+          <caption class="sr-only">Projected monthly national spending compared with the annual average</caption>
+          <thead><tr><th scope="col">Month</th><th scope="col">Spending index</th><th scope="col">Compared with the annual average</th></tr></thead>
+          <tbody id="modelDataMonths"></tbody>
+        </table>
+      </div>
+      <p class="model-dialog__note">A personal forecast also needs your transaction history.
+        Your own spending patterns can differ from the national trend.</p>
+    </dialog>
+
+    <script src="forecast-data.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

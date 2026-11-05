@@ -5,8 +5,8 @@
   --paper-hi: #f5f2eb;
   --ink: #013220;
   --ink-soft: #0c4a30;
-  --text: #17261d;
-  --text-2: #36453b;
+  --budgie-text: #17261d;
+  --budgie-text-muted: #36453b;
   --rule: rgba(1, 50, 32, 0.2);
   --rule-strong: rgba(1, 50, 32, 0.42);
 
@@ -21,7 +21,7 @@
   --on-ink: #efebe3;
   --on-ink-2: #b9dcc4;
 
-  --display: "Bodoni Moda", "Didot", Georgia, serif;
+  --display: "Lora", Georgia, serif;
   --sans: "Manrope", system-ui, -apple-system, sans-serif;
   --mono: "Red Hat Mono", ui-monospace, monospace;
 
@@ -54,7 +54,7 @@ body {
   font-family: var(--sans);
   font-size: 1.0625rem;
   line-height: 1.65;
-  color: var(--text);
+  color: var(--budgie-text);
   background: var(--paper) var(--underprint);
   overflow-x: hidden;
 }
@@ -155,7 +155,7 @@ em {
   line-height: 1.6;
   letter-spacing: 0.01em;
   text-transform: none;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   margin-top: 1.75rem;
   max-width: 62ch;
 }
@@ -256,7 +256,7 @@ em {
 .nav__links a {
   font-size: 0.95rem;
   font-weight: 500;
-  color: var(--text);
+  color: var(--budgie-text);
   text-decoration: none;
   padding-block: 0.4rem;
   background: linear-gradient(var(--ink), var(--ink)) 0 100% / 0 1px no-repeat;
@@ -329,7 +329,7 @@ em {
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(3.25rem, min(6.6vw, 10svh), 6rem);
-  line-height: 0.98;
+  line-height: 1.08;
   letter-spacing: -0.025em;
   color: var(--ink);
   text-wrap: balance;
@@ -344,7 +344,7 @@ em {
   margin-top: clamp(1.25rem, 3svh, 2.25rem);
   font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
   line-height: 1.6;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   max-width: 34rem;
 }
 
@@ -359,7 +359,7 @@ em {
 .hero__meta {
   margin-top: clamp(1rem, 2.5svh, 1.75rem);
   font-size: 0.75rem;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
 }
 
 /* The rosette */
@@ -418,7 +418,7 @@ em {
   font-size: var(--label, 19px);
   font-weight: 500;
   letter-spacing: 0.2em;
-  fill: var(--text-2);
+  fill: var(--budgie-text-muted);
   text-anchor: middle;
   dominant-baseline: middle;
   transition: fill 200ms;
@@ -481,8 +481,12 @@ em {
   position: absolute;
   top: 0;
   right: 0;
-  font-size: clamp(0.9rem, 1.4vw, 1.3rem);
-  font-weight: 500;
+  max-width: 25ch;
+  text-align: right;
+  font-size: clamp(0.75rem, 1.1vw, 1rem);
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  font-weight: 600;
   color: var(--ember-ink);
 }
 
@@ -497,7 +501,7 @@ em {
   align-items: baseline;
   font-size: 0.72rem;
   letter-spacing: 0.1em;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   padding-top: 0.9rem;
   border-top: 1px solid var(--ember);
 }
@@ -523,7 +527,8 @@ em {
   letter-spacing: 0.02em;
   font-family: var(--sans);
   font-size: 0.875rem;
-  color: var(--text);
+  color: var(--ink);
+  font-weight: 500;
 }
 
 .rosette__note {
@@ -561,7 +566,7 @@ em {
 }
 
 .year__body {
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   max-width: 34rem;
 }
 
@@ -590,7 +595,7 @@ em {
   width: 100%;
   height: clamp(15rem, 26vw, 21rem);
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   cursor: pointer;
   font: inherit;
   color: inherit;
@@ -634,7 +639,14 @@ em {
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.16em;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
+}
+
+.month__index {
+  padding-bottom: 0.6rem;
+  font-family: var(--mono);
+  font-size: clamp(0.6rem, 1.1vw, 0.8rem);
+  color: var(--ink);
 }
 
 .month:hover .month__bar,
@@ -645,7 +657,7 @@ em {
 
 .ledger__read {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 0.35rem 1.5rem;
   align-items: baseline;
   margin-top: 1.5rem;
@@ -666,7 +678,15 @@ em {
 }
 
 .ledger__why {
-  color: var(--text);
+  grid-column: 1 / -1;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.rosette__why::selection,
+.ledger__why::selection {
+  background: var(--paper-deep);
+  color: var(--ink);
 }
 
 .month--hot[aria-pressed="true"] .month__bar,
@@ -699,13 +719,13 @@ em {
 }
 
 .plan__intro p {
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   max-width: 34rem;
 }
 
 .plan__intro .plan__decide {
   margin-top: 1.25rem;
-  color: var(--text);
+  color: var(--budgie-text);
 }
 
 .plan__decide strong {
@@ -744,7 +764,7 @@ em {
 }
 
 .entry__text p:not(.entry__lead) {
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   max-width: 30rem;
 }
 
@@ -793,7 +813,7 @@ em {
 
 .here__copy > p {
   margin-top: 1.5rem;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   max-width: 36rem;
 }
 
@@ -816,7 +836,7 @@ em {
 }
 
 .terms dd {
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
 }
 
 .here__plates {
@@ -947,7 +967,7 @@ em {
 }
 
 .honest__list p {
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   font-size: 1rem;
 }
 
@@ -1009,7 +1029,7 @@ em {
 .access__note {
   margin-top: 1rem;
   font-size: 0.75rem;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
 }
 
 .access__title {
@@ -1018,8 +1038,106 @@ em {
 
 .access__body {
   margin: 1.25rem 0 2.25rem;
-  color: var(--text-2);
+  color: var(--budgie-text-muted);
   max-width: 34rem;
+}
+
+.model-data-link {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.22em;
+  cursor: pointer;
+}
+
+.model-dialog {
+  width: min(46rem, calc(100% - 2rem));
+  max-height: 85svh;
+  margin: auto;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  border: 1px solid var(--rule-strong);
+  border-radius: 1rem;
+  background: var(--paper-hi);
+  color: var(--budgie-text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-y: auto;
+}
+
+.model-dialog::backdrop {
+  background: rgba(1, 50, 32, 0.65);
+}
+
+html:has(.model-dialog[open]) {
+  overflow: hidden;
+}
+
+.model-dialog__head {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.model-dialog__head .h2 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.model-dialog__close {
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+
+.model-dialog p,
+.model-dialog h3 {
+  margin-top: 1.25rem;
+}
+
+.model-dialog p,
+.model-dialog strong {
+  color: var(--ink);
+}
+
+.model-dialog h3 {
+  color: var(--ink);
+  font-size: 1.125rem;
+}
+
+.model-dialog__table {
+  overflow-x: auto;
+  margin-top: 0.75rem;
+}
+
+.model-dialog table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+.model-dialog th,
+.model-dialog td {
+  padding: 0.65rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+}
+
+.model-dialog thead {
+  background: var(--paper-deep);
+  color: var(--ink);
+}
+
+.model-dialog__note {
+  color: var(--budgie-text-muted);
 }
 
 /* ── Footer ── */
@@ -1157,6 +1275,7 @@ em {
 
   .rosette__serial {
     position: static;
+    max-width: none;
     display: block;
     text-align: right;
     margin-bottom: 0.5rem;
