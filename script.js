@@ -8,11 +8,18 @@
   var forecast = window.BUDGIE_FORECAST;
   var YEAR = forecast.months;
 
-  var pct = function (v) {
-    var d = Math.round((v - 1) * 100);
+  var maxChange = Math.max.apply(null, YEAR.map(function (mo) { return Math.abs(mo.changePercent); })) || 1;
+
+  function signedPercent(change) {
+    var rounded = Number(change.toFixed(1));
+    return (rounded > 0 ? '+' : '') + rounded.toFixed(1) + '%';
+  }
+
+  var pct = function (change) {
+    var rounded = Number(change.toFixed(1));
     return 'Expected spending: ' +
-      (d === 0 ? 'about the yearly average' : Math.abs(d) + '% ' +
-        (d > 0 ? 'above' : 'below') + ' yearly average');
+      (rounded === 0 ? 'about the same as previous month' : Math.abs(rounded).toFixed(1) + '% ' +
+        (rounded > 0 ? 'higher' : 'lower') + ' than previous month');
   };
 
   /* Month i peaks at clock position i + 1, so December sits at 12 o'clock. */
@@ -20,8 +27,8 @@
     var p = ((t / TAU) * 12 + 11) % 12;
     var i = Math.floor(p);
     var f = p - i;
-    var a = YEAR[i].v;
-    var b = YEAR[(i + 1) % 12].v;
+    var a = 1 + YEAR[i].changePercent / maxChange * 0.18;
+    var b = 1 + YEAR[(i + 1) % 12].changePercent / maxChange * 0.18;
     return a + (b - a) * ((1 - Math.cos(Math.PI * f)) / 2);
   }
 
@@ -111,7 +118,7 @@
         d: d,
         tabindex: '0',
         role: 'button',
-        'aria-label': mo.m + ': ' + pct(mo.v) + '. ' + mo.why
+        'aria-label': mo.m + ': ' + pct(mo.changePercent) + '. ' + mo.why
       }, g);
       w.addEventListener('mouseenter', function () { select(i); });
       w.addEventListener('click', function () { select(i); });
@@ -159,7 +166,7 @@
       drawHot(i, false);
     }
     [[readMonth, ledgerMonth], [readValue, ledgerValue], [readWhy, ledgerWhy]].forEach(function (pair, n) {
-      var text = n === 0 ? YEAR[i].m : n === 1 ? pct(YEAR[i].v) : YEAR[i].why;
+      var text = n === 0 ? YEAR[i].m : n === 1 ? pct(YEAR[i].changePercent) : YEAR[i].why;
       pair.forEach(function (node) {
         if (node) node.textContent = text;
       });
@@ -169,16 +176,16 @@
   function buildLedger() {
     var ledger = document.getElementById('ledger');
     if (!ledger) return;
-    var max = Math.max.apply(null, YEAR.map(function (mo) { return mo.v; }));
     YEAR.forEach(function (mo, i) {
       var li = document.createElement('li');
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'month' + (mo.hot ? ' month--hot' : '');
+      b.className = 'month' + (mo.changePercent > 0 ? ' month--hot' : '');
       b.setAttribute('aria-pressed', i === selected ? 'true' : 'false');
-      b.setAttribute('aria-label', mo.m + ': ' + pct(mo.v) + '. ' + mo.why);
-      b.style.setProperty('--h', ((mo.v / max) * 100).toFixed(2) + '%');
-      b.innerHTML = '<span class="month__bar" aria-hidden="true"></span><span class="month__name" aria-hidden="true">' + mo.s + '</span><span class="month__index" aria-hidden="true">' + mo.index.toFixed(1) + '</span>';
+      b.setAttribute('aria-label', mo.m + ': ' + pct(mo.changePercent) + '. ' + mo.why);
+      b.style.setProperty('--h', (Math.abs(mo.changePercent) / maxChange * 50).toFixed(2) + '%');
+      b.style.setProperty('--bar-top', mo.changePercent < 0 ? '50%' : (50 - mo.changePercent / maxChange * 50).toFixed(2) + '%');
+      b.innerHTML = '<span class="month__plot" aria-hidden="true"><span class="month__bar"></span></span><span class="month__name" aria-hidden="true">' + mo.s + '</span><span class="month__percent" aria-hidden="true">' + signedPercent(mo.changePercent) + '</span>';
       b.addEventListener('click', function () {
         select(i);
       });
@@ -191,7 +198,7 @@
   /* ── Microprint: the sample figures as fine line ── */
   function buildMicroprint() {
     var line = YEAR.map(function (mo) {
-      return mo.s + ' ' + mo.v.toFixed(2);
+      return mo.s + ' ' + signedPercent(mo.changePercent);
     }).join(' · ');
     var text = ('BUDGIE NATIONAL ML TREND ' + forecast.year + ' · ' + line + ' · ').repeat(8);
     document.querySelectorAll('[data-microprint]').forEach(function (n) {
@@ -266,10 +273,7 @@
     var modelRows = document.getElementById('modelDataMonths');
     YEAR.forEach(function (month) {
       var row = document.createElement('tr');
-      var difference = Math.round((month.v - 1) * 100);
-      var comparison = difference === 0 ? 'About average' :
-        'About ' + Math.abs(difference) + '% ' + (difference > 0 ? 'above' : 'below') + ' average';
-      [month.m, month.index.toFixed(1), comparison].forEach(function (value, i) {
+      [month.m, signedPercent(month.changePercent), month.why].forEach(function (value, i) {
         var cell = document.createElement(i === 0 ? 'th' : 'td');
         if (i === 0) cell.setAttribute('scope', 'row');
         cell.textContent = value;

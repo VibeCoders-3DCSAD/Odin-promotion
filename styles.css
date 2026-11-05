@@ -570,6 +570,44 @@ em {
   max-width: 34rem;
 }
 
+.spending-chart {
+  margin: 0;
+}
+
+.spending-chart__caption {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.spending-chart__caption h3 {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 400;
+}
+
+.spending-chart__caption p {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--budgie-text-muted);
+}
+
+.spending-chart__plot {
+  position: relative;
+  isolation: isolate;
+}
+
+.spending-chart__logo {
+  position: absolute;
+  top: calc((100% - 5rem) / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(3.5rem, 7vw, 5.5rem);
+  height: auto;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: -1;
+}
+
 .ledger {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -603,13 +641,20 @@ em {
   text-align: center;
 }
 
+.month__plot {
+  position: relative;
+  align-self: stretch;
+  background: linear-gradient(var(--rule-strong), var(--rule-strong)) center / 100% 1px no-repeat;
+}
+
 .month__bar {
-  align-self: end;
-  justify-self: center;
+  position: absolute;
+  top: var(--bar-top);
+  left: 50%;
+  transform: translateX(-50%);
   width: 58%;
   height: var(--h);
   border: 1px solid var(--ink);
-  border-bottom: 0;
   background: repeating-linear-gradient(
     90deg,
     var(--ink) 0 1px,
@@ -642,7 +687,7 @@ em {
   color: var(--budgie-text-muted);
 }
 
-.month__index {
+.month__percent {
   padding-bottom: 0.6rem;
   font-family: var(--mono);
   font-size: clamp(0.6rem, 1.1vw, 0.8rem);
