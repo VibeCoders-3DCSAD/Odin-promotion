@@ -1264,6 +1264,20 @@ html:has(.model-dialog[open]) {
   color: var(--on-ink-2);
 }
 
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 1 / -1;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.8125rem;
+}
+
+.footer__links a {
+  padding-block: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .footer .microprint {
   color: var(--on-ink);
   border-color: rgba(239, 235, 227, 0.2);

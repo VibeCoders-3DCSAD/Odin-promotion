@@ -1,0 +1,178 @@
+/* Legal documents share the promotion site's paper, ink and typography. */
+.legal-page .nav__inner {
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.legal {
+  padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.legal a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.legal__header {
+  max-width: 54rem;
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.legal__eyebrow,
+.legal__date {
+  color: var(--budgie-text-muted);
+  font-size: 0.8125rem;
+}
+
+.legal__header h1 {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  margin-block: 1rem 1.25rem;
+}
+
+.legal__intro {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  max-width: 65ch;
+}
+
+.legal__layout {
+  display: grid;
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 46rem);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: start;
+}
+
+.legal__contents {
+  position: sticky;
+  top: calc(var(--nav-h) + 2rem);
+  border-top: 1px solid var(--rule-strong);
+  padding-top: 1.25rem;
+}
+
+.legal__contents h2 {
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.legal__contents ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.legal__contents a {
+  display: inline-block;
+  padding-block: 0.35rem;
+}
+
+.legal__body section {
+  border-top: 1px solid var(--rule-strong);
+  padding-block: 1.75rem 2.5rem;
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}
+
+.legal__body h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  font-family: var(--display);
+  font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+  font-weight: 400;
+  line-height: 1.35;
+  margin-bottom: 1.25rem;
+}
+
+.legal__number {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--budgie-text-muted);
+}
+
+.legal__body p,
+.legal__body li {
+  line-height: 1.85;
+  color: var(--budgie-text);
+  overflow-wrap: anywhere;
+}
+
+.legal__body p + p,
+.legal__body ul + p {
+  margin-top: 1rem;
+}
+
+.legal__body ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+}
+
+.legal__body li + li {
+  margin-top: 0.75rem;
+}
+
+.legal__back {
+  display: inline-block;
+  padding-block: 0.75rem;
+}
+
+.legal__footer,
+.legal__footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.legal__footer {
+  font-size: 0.8125rem;
+  padding-block: 2rem;
+}
+
+.legal__footer a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  padding-block: 0.75rem;
+}
+
+.legal__footer [aria-current="page"] {
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .legal__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .legal__contents {
+    position: static;
+  }
+}
+
+@media print {
+  .legal-page .nav,
+  .legal-page .skip,
+  .legal__contents,
+  .legal__back,
+  .legal-page .footer {
+    display: none;
+  }
+
+  .legal-page {
+    background: white;
+  }
+
+  .legal__layout {
+    display: block;
+  }
+
+  .legal__body section {
+    break-inside: avoid;
+  }
+}
