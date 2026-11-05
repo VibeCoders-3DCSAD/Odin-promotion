@@ -5,6 +5,20 @@ window.BUDGIE_FORECAST = {
   "psaDataVintage": "2026-08-07",
   "modelCreatedAt": "2026-10-15T06:31:56Z",
   "basis": "National HFCE trend; quarterly growth compounded evenly over three months. Percentages compare each month with the preceding month; January uses the preceding December. Not a personal expense forecast.",
+  "amountBasis": "Illustrative monthly spending: 2027 HFCE levels scaled so their 12-month mean equals the 2025 FIES average for families of four. Not a household forecast or an inflation adjustment.",
+  "previousDecemberAmountPhp": 30054.85110622866,
+  "fiesAverage": {
+    "year": 2025,
+    "familySize": 4,
+    "familySizeField": "FSIZE",
+    "annualExpenditurePhp": 339421.2973154141,
+    "monthlyExpenditurePhp": 28285.108109617842,
+    "sampleHouseholds": 29346,
+    "expenditureField": "TOTEX",
+    "weightField": "RFACT",
+    "source": "PSA 2025 FIES Volume 1 public-use file",
+    "sourceSha256": "7bbda917282455e2ba02c54c452f5735268de0606dd30fc637a4128857b8817b"
+  },
   "artifactSha256": {
     "alcohol_tobacco.joblib": "103481093b048e3783e203973ea32bf1a2fd2699bf941dc06f1948864678712f",
     "clothing_footwear.joblib": "7a6d945278efd4a1bae0d89c281785e4f197f51fe4157a4710eb8f358a44a3c2",
@@ -124,7 +138,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 2.8084801172971963,
         "transport": 5.755049954180613
       },
-      "why": "Food -7.5%; Other goods & services -5.0% vs previous month."
+      "why": "Food -7.5%; Other goods & services -5.0% vs previous month.",
+      "amountPhp": 28980.31815521693
     },
     {
       "m": "February",
@@ -144,7 +159,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 2.8084801172971963,
         "transport": 5.755049954180591
       },
-      "why": "Food -7.5%; Other goods & services -5.0% vs previous month."
+      "why": "Food -7.5%; Other goods & services -5.0% vs previous month.",
+      "amountPhp": 28000.06380593636
     },
     {
       "m": "March",
@@ -164,7 +180,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 2.8084801172972185,
         "transport": 5.755049954180613
       },
-      "why": "Food -7.5%; Other goods & services -5.0% vs previous month."
+      "why": "Food -7.5%; Other goods & services -5.0% vs previous month.",
+      "amountPhp": 27108.787097282515
     },
     {
       "m": "April",
@@ -184,7 +201,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": -19.505508022617835,
         "transport": -5.255134360503799
       },
-      "why": "Restaurants & hotels -19.5%; Food +4.5% vs previous month."
+      "why": "Restaurants & hotels -19.5%; Food +4.5% vs previous month.",
+      "amountPhp": 26835.57415719578
     },
     {
       "m": "May",
@@ -204,7 +222,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": -19.5055080226178,
         "transport": -5.255134360503833
       },
-      "why": "Restaurants & hotels -19.5%; Food +4.5% vs previous month."
+      "why": "Restaurants & hotels -19.5%; Food +4.5% vs previous month.",
+      "amountPhp": 26751.34169187803
     },
     {
       "m": "June",
@@ -224,7 +243,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": -19.50550802261781,
         "transport": -5.25513436050381
       },
-      "why": "Food +4.5%; Restaurants & hotels -19.5% vs previous month."
+      "why": "Food +4.5%; Restaurants & hotels -19.5% vs previous month.",
+      "amountPhp": 26834.78469047289
     },
     {
       "m": "July",
@@ -244,7 +264,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 15.8214566553325,
         "transport": 5.766845242684249
       },
-      "why": "Restaurants & hotels +15.8%; Food -2.4% vs previous month."
+      "why": "Restaurants & hotels +15.8%; Food -2.4% vs previous month.",
+      "amountPhp": 27057.88966329493
     },
     {
       "m": "August",
@@ -264,7 +285,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 15.821456655332478,
         "transport": 5.766845242684249
       },
-      "why": "Restaurants & hotels +15.8%; Food -2.4% vs previous month."
+      "why": "Restaurants & hotels +15.8%; Food -2.4% vs previous month.",
+      "amountPhp": 27386.188656253606
     },
     {
       "m": "September",
@@ -284,7 +306,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 15.821456655332478,
         "transport": 5.766845242684271
       },
-      "why": "Restaurants & hotels +15.8%; Health +15.7% vs previous month."
+      "why": "Restaurants & hotels +15.8%; Health +15.7% vs previous month.",
+      "amountPhp": 27830.248441364492
     },
     {
       "m": "October",
@@ -304,7 +327,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 9.880843556192275,
         "transport": -5.63875759009621
       },
-      "why": "Food +8.7%; Other goods & services +9.0% vs previous month."
+      "why": "Food +8.7%; Other goods & services +9.0% vs previous month.",
+      "amountPhp": 29240.825359891183
     },
     {
       "m": "November",
@@ -324,7 +348,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 9.880843556192275,
         "transport": -5.638757590096189
       },
-      "why": "Food +8.7%; Other goods & services +9.0% vs previous month."
+      "why": "Food +8.7%; Other goods & services +9.0% vs previous month.",
+      "amountPhp": 30818.32935758746
     },
     {
       "m": "December",
@@ -344,7 +369,8 @@ window.BUDGIE_FORECAST = {
         "restaurants_hotels": 9.880843556192275,
         "transport": -5.638757590096189
       },
-      "why": "Food +8.7%; Other goods & services +9.0% vs previous month."
+      "why": "Food +8.7%; Other goods & services +9.0% vs previous month.",
+      "amountPhp": 32576.946239039964
     }
   ]
 };

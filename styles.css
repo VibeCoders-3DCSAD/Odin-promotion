@@ -160,6 +160,13 @@ em {
   max-width: 62ch;
 }
 
+.forecast-note {
+  max-width: 76ch;
+  display: grid;
+  gap: 0.85rem;
+  line-height: 1.8;
+}
+
 /* ── Buttons and links ── */
 
 .btn {
@@ -478,10 +485,9 @@ em {
 }
 
 .rosette__serial {
-  position: absolute;
-  top: 0;
-  right: 0;
-  max-width: 25ch;
+  display: block;
+  margin-bottom: 1.5rem;
+  text-wrap: balance;
   text-align: right;
   font-size: clamp(0.75rem, 1.1vw, 1rem);
   line-height: 1.5;
@@ -591,21 +597,50 @@ em {
   color: var(--budgie-text-muted);
 }
 
+.spending-chart__caption .spending-chart__average {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  color: var(--ink);
+}
+
+.spending-chart__average strong {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.spending-chart__caption .spending-chart__projection {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
 .spending-chart__plot {
   position: relative;
+  --month-height: clamp(15rem, 26vw, 21rem);
+  --month-footer: 4.6rem;
+  padding-left: 6rem;
   isolation: isolate;
 }
 
-.spending-chart__logo {
+
+.spending-chart__baseline {
   position: absolute;
-  top: calc((100% - 5rem) / 2);
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(3.5rem, 7vw, 5.5rem);
-  height: auto;
-  opacity: 0.3;
-  pointer-events: none;
-  z-index: -1;
+  left: 0;
+  top: calc((var(--month-height) - var(--month-footer)) / 2);
+  transform: translateY(-50%);
+  width: 5.4rem;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.spending-chart__baseline--second {
+  display: none;
 }
 
 .ledger {
@@ -631,9 +666,9 @@ em {
   border: 0;
   background: transparent;
   width: 100%;
-  height: clamp(15rem, 26vw, 21rem);
+  height: var(--month-height);
   display: grid;
-  grid-template-rows: 1fr auto auto;
+  grid-template-rows: minmax(0, 1fr) 3rem 1.6rem;
   cursor: pointer;
   font: inherit;
   color: inherit;
@@ -687,7 +722,7 @@ em {
   color: var(--budgie-text-muted);
 }
 
-.month__percent {
+.month__amount {
   padding-bottom: 0.6rem;
   font-family: var(--mono);
   font-size: clamp(0.6rem, 1.1vw, 0.8rem);
@@ -1318,14 +1353,6 @@ html:has(.model-dialog[open]) {
     min-width: 0;
   }
 
-  .rosette__serial {
-    position: static;
-    max-width: none;
-    display: block;
-    text-align: right;
-    margin-bottom: 0.5rem;
-  }
-
   .hero {
     grid-template-rows: auto;
     grid-template-areas: "copy" "dial" "read";
@@ -1349,6 +1376,21 @@ html:has(.model-dialog[open]) {
 }
 
 @media (max-width: 640px) {
+  .spending-chart__plot {
+    --month-height: 11rem;
+    padding-left: 4.75rem;
+  }
+
+  .spending-chart__baseline {
+    width: 4.2rem;
+    font-size: 0.62rem;
+  }
+
+  .spending-chart__baseline--second {
+    display: block;
+    top: calc(var(--month-height) * 1.5 - var(--month-footer) / 2);
+  }
+
   .ledger {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }

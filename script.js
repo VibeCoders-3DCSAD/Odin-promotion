@@ -8,16 +8,38 @@
   var forecast = window.BUDGIE_FORECAST;
   var YEAR = forecast.months;
 
-  var maxChange = Math.max.apply(null, YEAR.map(function (mo) { return Math.abs(mo.changePercent); })) || 1;
+  var householdAverage = forecast.fiesAverage;
+  function pesos(value) {
+    return '₱' + Math.round(value).toLocaleString('en-PH');
+  }
+  if (householdAverage) {
+    document.getElementById('fiesMonthlyAverage').textContent = pesos(householdAverage.monthlyExpenditurePhp);
+    document.getElementById('fiesAverageSource').textContent = householdAverage.year + ' FIES · ' +
+      pesos(householdAverage.annualExpenditurePhp) + ' per year · Families of ' + householdAverage.familySize + ' only · Survey-weighted average';
+    document.getElementById('fiesAverageMethod').textContent = 'The ' + householdAverage.year +
+      ' FIES average for a family of ' + householdAverage.familySize + ' is ' + pesos(householdAverage.annualExpenditurePhp) + ' per year, or ' +
+      pesos(householdAverage.monthlyExpenditurePhp) + ' per month when divided by 12. It uses only ' +
+      householdAverage.sampleHouseholds.toLocaleString('en-PH') +
+      ' records with average family size (FSIZE) exactly ' + householdAverage.familySize +
+      ', weighting total expenditure (TOTEX) by the family / household weight (RFACT). ' +
+      'This is an annual survey average expressed monthly, not an observed monthly series or a ' +
+      forecast.year + ' forecast. Total expenditure includes non-cash items such as imputed rent.';
+  }
+
+  var averageAmount = householdAverage.monthlyExpenditurePhp;
+  var maxDeviation = Math.max.apply(null, YEAR.map(function (mo) { return Math.abs(mo.amountPhp - averageAmount); })) || 1;
+  document.querySelectorAll('[data-spending-average]').forEach(function (node) {
+    node.textContent = pesos(averageAmount) + ' average';
+  });
 
   function signedPercent(change) {
     var rounded = Number(change.toFixed(1));
     return (rounded > 0 ? '+' : '') + rounded.toFixed(1) + '%';
   }
 
-  var pct = function (change) {
-    var rounded = Number(change.toFixed(1));
-    return 'Expected spending: ' +
+  var pct = function (month) {
+    var rounded = Number(month.changePercent.toFixed(1));
+    return 'Illustrative spending: ' + pesos(month.amountPhp) + ' · ' +
       (rounded === 0 ? 'about the same as previous month' : Math.abs(rounded).toFixed(1) + '% ' +
         (rounded > 0 ? 'higher' : 'lower') + ' than previous month');
   };
@@ -27,8 +49,8 @@
     var p = ((t / TAU) * 12 + 11) % 12;
     var i = Math.floor(p);
     var f = p - i;
-    var a = 1 + YEAR[i].changePercent / maxChange * 0.18;
-    var b = 1 + YEAR[(i + 1) % 12].changePercent / maxChange * 0.18;
+    var a = 1 + (YEAR[i].amountPhp - averageAmount) / maxDeviation * 0.18;
+    var b = 1 + (YEAR[(i + 1) % 12].amountPhp - averageAmount) / maxDeviation * 0.18;
     return a + (b - a) * ((1 - Math.cos(Math.PI * f)) / 2);
   }
 
@@ -118,7 +140,7 @@
         d: d,
         tabindex: '0',
         role: 'button',
-        'aria-label': mo.m + ': ' + pct(mo.changePercent) + '. ' + mo.why
+        'aria-label': mo.m + ': ' + pct(mo) + '. ' + mo.why
       }, g);
       w.addEventListener('mouseenter', function () { select(i); });
       w.addEventListener('click', function () { select(i); });
@@ -166,7 +188,7 @@
       drawHot(i, false);
     }
     [[readMonth, ledgerMonth], [readValue, ledgerValue], [readWhy, ledgerWhy]].forEach(function (pair, n) {
-      var text = n === 0 ? YEAR[i].m : n === 1 ? pct(YEAR[i].changePercent) : YEAR[i].why;
+      var text = n === 0 ? YEAR[i].m : n === 1 ? pct(YEAR[i]) : YEAR[i].why;
       pair.forEach(function (node) {
         if (node) node.textContent = text;
       });
@@ -180,12 +202,13 @@
       var li = document.createElement('li');
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'month' + (mo.changePercent > 0 ? ' month--hot' : '');
+      var deviation = mo.amountPhp - averageAmount;
+      b.className = 'month' + (deviation > 0 ? ' month--hot' : '');
       b.setAttribute('aria-pressed', i === selected ? 'true' : 'false');
-      b.setAttribute('aria-label', mo.m + ': ' + pct(mo.changePercent) + '. ' + mo.why);
-      b.style.setProperty('--h', (Math.abs(mo.changePercent) / maxChange * 50).toFixed(2) + '%');
-      b.style.setProperty('--bar-top', mo.changePercent < 0 ? '50%' : (50 - mo.changePercent / maxChange * 50).toFixed(2) + '%');
-      b.innerHTML = '<span class="month__plot" aria-hidden="true"><span class="month__bar"></span></span><span class="month__name" aria-hidden="true">' + mo.s + '</span><span class="month__percent" aria-hidden="true">' + signedPercent(mo.changePercent) + '</span>';
+      b.setAttribute('aria-label', mo.m + ': ' + pct(mo) + '. ' + mo.why);
+      b.style.setProperty('--h', (Math.abs(deviation) / maxDeviation * 50).toFixed(2) + '%');
+      b.style.setProperty('--bar-top', deviation < 0 ? '50%' : (50 - deviation / maxDeviation * 50).toFixed(2) + '%');
+      b.innerHTML = '<span class="month__plot" aria-hidden="true"><span class="month__bar"></span></span><span class="month__name" aria-hidden="true">' + mo.s + '</span><span class="month__amount" aria-hidden="true">' + '₱' + (mo.amountPhp / 1000).toFixed(1) + 'k' + '</span>';
       b.addEventListener('click', function () {
         select(i);
       });
@@ -268,12 +291,12 @@
     });
     document.getElementById('modelDataSource').textContent =
       'These charts show projections for ' + forecast.year + ', using PSA data available as of ' + vintage +
-      '. Model version: ' + forecast.modelVersion + '.';
+      '.';
     document.getElementById('modelDataYear').textContent = forecast.year + ', month by month';
     var modelRows = document.getElementById('modelDataMonths');
     YEAR.forEach(function (month) {
       var row = document.createElement('tr');
-      [month.m, signedPercent(month.changePercent), month.why].forEach(function (value, i) {
+      [month.m, pesos(month.amountPhp), signedPercent(month.changePercent), month.why].forEach(function (value, i) {
         var cell = document.createElement(i === 0 ? 'th' : 'td');
         if (i === 0) cell.setAttribute('scope', 'row');
         cell.textContent = value;
